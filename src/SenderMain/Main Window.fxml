@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="470.0" prefWidth="713.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="SenderMain.MainWindowController">
    <children>
       <Pane layoutX="7.0" layoutY="6.0" prefHeight="458.0" prefWidth="699.0" style="-fx-background-color: gray;">
          <children>
@@ -33,7 +33,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="sendAllPortsButton" layoutX="173.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="&quot;ALL&quot; Ports/Cards" />
+                  <Button fx:id="sendAllPortsButton" layoutX="173.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="&quot;ALL&quot; Cards/Ports" />
                   <Button fx:id="sendCardPortButton1" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="All Ports of Card" />
                   <TextField fx:id="cardPortField" layoutX="172.0" layoutY="80.0" prefHeight="25.0" prefWidth="70.0" promptText="Card#Port" />
                   <Label layoutX="252.0" layoutY="84.0" text="eg: 21#2" />
@@ -55,7 +55,7 @@
                   <Button fx:id="serverPauseMode" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Pause Mode" />
                   <Button fx:id="serverRunMode" layoutX="114.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Run Mode" />
                   <Button fx:id="serverScheduledMode" layoutX="213.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Sched Mode" />
-                  <Label layoutX="124.0" layoutY="5.0" text="Queue Ops" textOverrun="CLIP">
+                  <Label layoutX="101.0" layoutY="4.0" text="Queue Operations" textOverrun="CLIP">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
