@@ -33,4 +33,6 @@ public class DBConnection {
         }
         choiceBox.setItems(list);
     }
-}
+
+
+}//end class

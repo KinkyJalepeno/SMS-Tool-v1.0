@@ -18,7 +18,7 @@
             <Pane layoutX="14.0" layoutY="14.0" prefHeight="101.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
                <children>
                   <ChoiceBox fx:id="choiceBox" layoutX="6.0" layoutY="6.0" prefHeight="31.0" prefWidth="167.0" style="-fx-border-color: black;" />
-                  <Button fx:id="connectToGateway" layoutX="200.0" layoutY="6.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Connect" />
+                  <Button fx:id="connectToGateway" layoutX="200.0" layoutY="6.0" mnemonicParsing="false" onAction="#connectToSite" prefHeight="31.0" prefWidth="93.0" text="Connect" />
                   <Button fx:id="addGateway" layoutX="200.0" layoutY="54.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Add Gateway" />
                   <Button fx:id="deleteGateway" layoutX="43.0" layoutY="54.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Del Gateway" />
                </children>

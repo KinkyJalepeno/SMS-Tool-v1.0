@@ -36,4 +36,15 @@ public class MainWindowController implements Initializable{
             e.printStackTrace();
         }
     }
-}
+
+    @FXML
+    private void connectToSite(){
+
+    String choice = choiceBox.getValue();
+    System.out.println(choice);
+
+    }
+
+
+
+}//End class
