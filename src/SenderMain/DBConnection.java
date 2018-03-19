@@ -12,7 +12,7 @@ public class DBConnection {
     private Statement stmt;
     private ResultSet rs;
     private String url;
-    //private ObservableList list;
+    private ObservableList list;
 
 
     public DBConnection(String sqlCommand) throws SQLException {
@@ -21,17 +21,16 @@ public class DBConnection {
         connection = DriverManager.getConnection(url);
         stmt = connection.createStatement();
         rs = stmt.executeQuery(sqlCommand);
-        //list = FXCollections.observableArrayList();
+        list = FXCollections.observableArrayList();
 
 
     }
 
-    public ObservableList<String> readList(ObservableList list) throws SQLException {
+    public ObservableList<String> readList() throws SQLException {
 
-        String site = null;
         while (rs.next()) {
-            site = rs.getString("site_name");
-            list.addAll(site);
+            String site = rs.getString("site_name");
+            this.list.addAll(site);
         }
         return list;
     }

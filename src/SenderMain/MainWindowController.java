@@ -24,10 +24,9 @@ public class MainWindowController implements Initializable{
 
         String sqlCommand = "SELECT * FROM gateways";
 
-        ObservableList list = FXCollections.observableArrayList();
         try {
             DBConnection dbConnection = new DBConnection(sqlCommand);
-            choiceBox.setItems(dbConnection.readList(list));
+            choiceBox.setItems(dbConnection.readList());
 
             textArea.setText("Sites successfully loaded from SQLite DB.");
 
