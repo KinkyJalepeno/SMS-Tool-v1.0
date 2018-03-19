@@ -1,7 +1,7 @@
 package SenderMain;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
 
 import java.sql.*;
 
@@ -12,6 +12,7 @@ public class DBConnection {
     private Statement stmt;
     private ResultSet rs;
     private String url;
+    //private ObservableList list;
 
 
     public DBConnection(String sqlCommand) throws SQLException {
@@ -20,18 +21,19 @@ public class DBConnection {
         connection = DriverManager.getConnection(url);
         stmt = connection.createStatement();
         rs = stmt.executeQuery(sqlCommand);
+        //list = FXCollections.observableArrayList();
 
 
     }
 
-    public void readList(ChoiceBox<String> choiceBox, ObservableList list) throws SQLException {
+    public ObservableList<String> readList(ObservableList list) throws SQLException {
 
         String site = null;
         while (rs.next()) {
             site = rs.getString("site_name");
             list.addAll(site);
         }
-        choiceBox.setItems(list);
+        return list;
     }
 
 

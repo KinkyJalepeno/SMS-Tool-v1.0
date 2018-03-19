@@ -8,7 +8,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -28,7 +27,7 @@ public class MainWindowController implements Initializable{
         ObservableList list = FXCollections.observableArrayList();
         try {
             DBConnection dbConnection = new DBConnection(sqlCommand);
-            dbConnection.readList(choiceBox, list);
+            choiceBox.setItems(dbConnection.readList(list));
 
             textArea.setText("Sites successfully loaded from SQLite DB.");
 
