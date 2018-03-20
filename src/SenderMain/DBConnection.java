@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 
-public class DBConnection {
+public class DBConnection implements AutoCloseable{
 
     private Connection connection;
     private Statement stmt;
@@ -35,5 +35,15 @@ public class DBConnection {
         return list;
     }
 
+    public void addGateway() {
+
+
+    }
+
+
+    @Override
+    public void close() throws Exception {
+        connection.close();
+    }
 
 }//end class
