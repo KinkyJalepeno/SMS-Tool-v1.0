@@ -39,15 +39,8 @@ public class AddGatewayController {
            errorLabel.setText("Error: Fill in all fields");
         }else {
 
-            String sqlCommand = ("INSERT INTO gateways VALUES ('" + site + "','" + address + "','" + pass + "')");
+            //String sqlCommand = ("INSERT INTO gateways VALUES ('" + site + "','" + address + "','" + pass + "')");
 
-
-            try(DBConnection dbConnection = new DBConnection(sqlCommand)) {
-                dbConnection.addGateway();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }//end try-catch
         }//end if-else
 
 

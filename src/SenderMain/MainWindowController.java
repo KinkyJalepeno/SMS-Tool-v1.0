@@ -7,6 +7,7 @@ import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable{
@@ -20,18 +21,14 @@ public class MainWindowController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        String sqlCommand = "SELECT * FROM gateways";
-
-        try(DBConnection dbConnection = new DBConnection(sqlCommand)) {
-            choiceBox.setItems(dbConnection.readList());
-
-            textArea.appendText("Sites successfully loaded from SQLite DB.\n");
-
-        } catch (Exception e) {
+        try {
+            DBConnection connection = new DBConnection(choiceBox);
+            connection.readList();
+        }catch(SQLException e){
             e.printStackTrace();
-            textArea.setText("Check you have the SQLite in correct location.\n The folder called SQLite should be in\n" +
-                    "the route of C: drive.");
         }
+
+
     }
 
     @FXML

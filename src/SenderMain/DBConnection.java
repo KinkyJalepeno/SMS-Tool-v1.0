@@ -2,48 +2,43 @@ package SenderMain;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ChoiceBox;
 
 import java.sql.*;
 
 
-public class DBConnection implements AutoCloseable{
+public class DBConnection {
 
     private Connection connection;
-    private Statement stmt;
-    private ResultSet rs;
     private String url;
-    private ObservableList list;
+    private ChoiceBox<String> choiceBox;
 
 
-    public DBConnection(String sqlCommand) throws SQLException {
+    public DBConnection(ChoiceBox<String> choiceBox) throws SQLException {
 
         url = "jdbc:sqlite:C://sqlite/sites.db";
         connection = DriverManager.getConnection(url);
-        stmt = connection.createStatement();
-        rs = stmt.executeQuery(sqlCommand);
-        list = FXCollections.observableArrayList();
-
+        this.choiceBox = choiceBox;
 
     }
 
-    public ObservableList<String> readList() throws SQLException {
+    public void readList() throws SQLException {
+        ObservableList<String> list = FXCollections.observableArrayList();
+        String sqlCommand = "SELECT * FROM gateways";
+
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery(sqlCommand);
 
         while (rs.next()) {
             String site = rs.getString("site_name");
-            this.list.addAll(site);
+            list.addAll(site);
         }
-        return list;
+        choiceBox.setItems(list);
     }
 
     public void addGateway() {
 
 
-    }
-
-
-    @Override
-    public void close() throws Exception {
-        connection.close();
     }
 
 }//end class
