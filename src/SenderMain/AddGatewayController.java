@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class AddGatewayController {
 
@@ -29,22 +30,22 @@ public class AddGatewayController {
     }
 
     @FXML
-    private void submitGatewayDetails(){
+    private void submitGatewayDetails() throws SQLException {
 
         String site = siteNameField.getText();
         String address = ipAddressField.getText();
         String pass = smsPasswordField.getText();
+        String sqlCommand = ("INSERT INTO gateways VALUES ('" + site + "','" + address + "','" + pass + "')");
 
         if(site.equals("") || address.equals("") || pass.equals("")){
-           errorLabel.setText("Error: Fill in all fields");
+            errorLabel.setText("Error: Fill in all fields");
         }else {
 
-            //String sqlCommand = ("INSERT INTO gateways VALUES ('" + site + "','" + address + "','" + pass + "')");
+            AddNewGateway addGateway = new AddNewGateway(sqlCommand);
+            addGateway.writeToDatabase();
 
+            errorLabel.setText("Submit OK");
         }//end if-else
-
-
     }//end submitGatewayDetails method
-
 
 } //end class
