@@ -45,7 +45,16 @@ public class AddGatewayController {
             addGateway.writeToDatabase();
 
             errorLabel.setText("Submit OK");
+
+            AddGatewayController controller = new AddGatewayController();
+            controller.reloadSiteList();
+
         }//end if-else
     }//end submitGatewayDetails method
+
+    private void reloadSiteList() {
+        System.out.print("I'd like to reload the site list");
+
+    }
 
 } //end class
