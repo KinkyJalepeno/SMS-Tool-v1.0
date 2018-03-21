@@ -27,18 +27,14 @@ public class MainWindowController implements Initializable{
         }catch(SQLException e){
             e.printStackTrace();
         }
-
-
-    }
+        textArea.setText("Site list successfully loaded from SQLite DB");
+    }//end initialise method
 
     @FXML
     private void addGateway() throws IOException {
 
         AddGatewayController newGateway = new AddGatewayController();
         newGateway.openAddGatewayWindow();
-
-
-
     }
 
     @FXML

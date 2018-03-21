@@ -26,13 +26,9 @@ public class DBConnection {
         ObservableList<String> list = FXCollections.observableArrayList();
         String sqlCommand = "SELECT * FROM gateways";
 
-        Statement stmt = connection.createStatement();
-        ResultSet rs = stmt.executeQuery(sqlCommand);
+        ExecuteCommand command = new ExecuteCommand(sqlCommand, connection);
+        command.readList(list);
 
-        while (rs.next()) {
-            String site = rs.getString("site_name");
-            list.addAll(site);
-        }
         choiceBox.setItems(list);
     }
 
