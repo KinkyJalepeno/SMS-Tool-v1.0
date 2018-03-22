@@ -26,7 +26,6 @@ public class AddNewGateway {
             stmt.executeQuery(sqlCommand);
         } catch (SQLException e) {
             System.out.print(e.getMessage());
-            e.printStackTrace();
         }
 
     }
