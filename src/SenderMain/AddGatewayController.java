@@ -11,6 +11,7 @@ public class AddGatewayController {
     @FXML private TextField ipAddressField;
     @FXML private TextField smsPasswordField;
     @FXML private Label errorLabel;
+    private MainWindowController mainWindowController;
 
     @FXML
     private void submitGatewayDetails() throws SQLException {
@@ -29,8 +30,16 @@ public class AddGatewayController {
 
             errorLabel.setText("Submit OK");
 
+            mainWindowController.getSiteList();
+
         }//end if-else
 
-        //SiteList refresh = new SiteList();
     }//end submitGatewayDetails method
+
+    public void setMainWindowController(MainWindowController mainWindowController) {
+        this.mainWindowController = mainWindowController;
+
+    }
+
+
 } //end class

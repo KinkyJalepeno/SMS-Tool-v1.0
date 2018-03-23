@@ -1,5 +1,6 @@
 package SenderMain;
 
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.Loader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,12 +13,11 @@ import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
 import java.net.URL;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable{
 
-    ObservableList list = FXCollections.observableArrayList();
 
     @FXML
     private ChoiceBox<String> choiceBox;
@@ -28,27 +28,49 @@ public class MainWindowController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
 
         try {
-            DBConnection dbConnection = new DBConnection();
-            choiceBox.setItems(dbConnection.readList(list));
-
-        } catch (SQLException e) {
+            getSiteList();
+        }catch(SQLException e){
             e.printStackTrace();
         }
+    }
 
-        textArea.setText("Site list loaded from SQLite DB: OK");
+    public void getSiteList() throws SQLException {
+
+        String sqlCommand = "SELECT * FROM gateways";
+        ObservableList list = FXCollections.observableArrayList();
+        String url = "jdbc:sqlite:C://sqlite/sites.db";
+        Connection connection = DriverManager.getConnection(url);
+
+        try {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlCommand);
+
+            while (rs.next()) {
+                String site = rs.getString("site_name");
+                list.addAll(site);
+            }
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        choiceBox.setItems(list);
+
     }
 
     @FXML
-    void addGateway() {
+    private void addGateway() {
 
         try {
             Stage stage = new Stage();
-            Parent root1 = FXMLLoader.load(getClass().getResource("Add Gateway Window.fxml"));
+            FXMLLoader loader = null;
+            Parent root1 = loader.load(getClass().getResource("Add Gateway Window.fxml"));
+            AddGatewayController controller = loader.<AddGatewayController>getController();
+            controller.setMainWindowController(this);
             stage.setTitle("Add a Gateway");
             stage.setScene(new Scene(root1));
             stage.show();
 
         } catch (Exception e) {
+            e.printStackTrace();
             System.out.println("Can't load new window");
         }
 
