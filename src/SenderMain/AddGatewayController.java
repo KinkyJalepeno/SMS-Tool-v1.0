@@ -13,7 +13,6 @@ public class AddGatewayController {
     @FXML private Label errorLabel;
     private MyCallback myCallback;
 
-
     @FXML
     private void submitGatewayDetails() throws SQLException {
 
@@ -40,7 +39,5 @@ public class AddGatewayController {
 
         this.myCallback = myCallback;
     }
-
-
 
 } //end class

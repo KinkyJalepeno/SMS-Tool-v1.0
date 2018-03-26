@@ -2,6 +2,7 @@ package SenderMain;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -13,6 +14,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.sql.*;
+import java.text.Collator;
 import java.util.ResourceBundle;
 
 public class MainWindowController implements Initializable{
@@ -51,38 +53,29 @@ public class MainWindowController implements Initializable{
         }catch(SQLException e){
             e.printStackTrace();
         }
-        choiceBox.setItems(list);
-
+        choiceBox.setItems(new SortedList<String>(list, Collator.getInstance()));
+        textArea.setText("Site list successfully loaded from SQLite DB");
     }
 
     @FXML
     private void addGateway() {
-
-        AddGatewayController controller = new AddGatewayController();
-        controller.setMyCallback( () -> {
-            try {
-                getSiteList();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
-
         try {
             Stage stage = new Stage();
-            FXMLLoader loader = null;
-            Parent root1 = loader.load(getClass().getResource("Add Gateway Window.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Add Gateway Window.fxml"));
+            Parent root1 = loader.load();
+
+            AddGatewayController controller = loader.getController();
+            controller.setMyCallback(() -> getSiteList());
+
             stage.setTitle("Add a Gateway");
             stage.setScene(new Scene(root1));
             stage.show();
-
+            System.out.println("back here after opening window");
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Can't load new window");
         }
 
-        System.out.println("back here after opening window");
     }
-
     @FXML
     private void connectToSite(){
 
