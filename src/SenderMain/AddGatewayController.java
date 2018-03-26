@@ -11,7 +11,7 @@ public class AddGatewayController {
     @FXML private TextField ipAddressField;
     @FXML private TextField smsPasswordField;
     @FXML private Label errorLabel;
-    private MyCallback myCallback;
+    private SiteListInterface siteList;
 
     @FXML
     private void submitGatewayDetails() throws SQLException {
@@ -29,15 +29,15 @@ public class AddGatewayController {
             addGateway.writeToDatabase();
 
             errorLabel.setText("Submit OK");
-            myCallback.action();
+            siteList.action();
 
         }//end if-else
 
     }//end submitGatewayDetails method
 
-    public void setMyCallback(MyCallback myCallback){
+    public void sendGetSiteList(SiteListInterface siteList){
 
-        this.myCallback = myCallback;
+        this.siteList = siteList;
     }
 
 } //end class

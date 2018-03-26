@@ -65,7 +65,13 @@ public class MainWindowController implements Initializable{
             Parent root1 = loader.load();
 
             AddGatewayController controller = loader.getController();
-            controller.setMyCallback(() -> getSiteList());
+            controller.sendGetSiteList(() -> {
+                try {
+                    getSiteList();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
 
             stage.setTitle("Add a Gateway");
             stage.setScene(new Scene(root1));
