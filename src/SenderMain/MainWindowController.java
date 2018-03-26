@@ -1,6 +1,5 @@
 package SenderMain;
 
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.Loader;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -59,12 +58,19 @@ public class MainWindowController implements Initializable{
     @FXML
     private void addGateway() {
 
+        AddGatewayController controller = new AddGatewayController();
+        controller.setMyCallback( () -> {
+            try {
+                getSiteList();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
+
         try {
             Stage stage = new Stage();
             FXMLLoader loader = null;
             Parent root1 = loader.load(getClass().getResource("Add Gateway Window.fxml"));
-            AddGatewayController controller = loader.<AddGatewayController>getController();
-            controller.setMainWindowController(this);
             stage.setTitle("Add a Gateway");
             stage.setScene(new Scene(root1));
             stage.show();
