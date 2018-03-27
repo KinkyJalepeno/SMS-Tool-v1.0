@@ -1,6 +1,6 @@
 package SenderMain;
 
-public interface SiteListInterface {
+public interface GetSiteList {
 
     void action();
 

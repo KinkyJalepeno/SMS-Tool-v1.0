@@ -11,7 +11,7 @@ public class AddGatewayController {
     @FXML private TextField ipAddressField;
     @FXML private TextField smsPasswordField;
     @FXML private Label errorLabel;
-    private SiteListInterface siteList;
+    private GetSiteList siteList;
 
     @FXML
     private void submitGatewayDetails() throws SQLException {
@@ -35,7 +35,7 @@ public class AddGatewayController {
 
     }//end submitGatewayDetails method
 
-    public void sendGetSiteList(SiteListInterface siteList){
+    public void sendGetSiteList(GetSiteList siteList){
 
         this.siteList = siteList;
     }
