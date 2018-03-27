@@ -54,9 +54,14 @@ public class MainWindowController implements Initializable{
             e.printStackTrace();
         }
         choiceBox.setItems(new SortedList<String>(list, Collator.getInstance()));
-        textArea.setText("Site list successfully loaded from SQLite DB");
+        textArea.appendText("SQLite loaded\n");
     }
 
+    @FXML
+    private void clearTextArea(){
+
+        textArea.clear();
+    }
     @FXML
     private void addGateway() {
         try {
@@ -76,11 +81,29 @@ public class MainWindowController implements Initializable{
             stage.setTitle("Add a Gateway");
             stage.setScene(new Scene(root1));
             stage.show();
-            System.out.println("back here after opening window");
+            //System.out.println("back here after opening window");
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+    @FXML
+    private void deleteGateway() throws SQLException {
+
+        String gateWay = choiceBox.getValue();
+        if(gateWay == null){
+            textArea.setText("You must choose an entry to delete from drop-down");
+        }else{
+            String sqlCommand = "DELETE FROM gateways WHERE site_name = '" + gateWay +"';";
+            //textArea.setText(sqlCommand);
+
+            DatabaseCommand executeCommand = new DatabaseCommand(sqlCommand);
+            executeCommand.command();
+
+            textArea.appendText(gateWay + " successfully deleted from DB\n");
+            getSiteList();
+            choiceBox.setValue("");
+        }
     }
     @FXML
     private void connectToSite(){

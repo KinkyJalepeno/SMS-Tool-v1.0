@@ -14,13 +14,13 @@
       <Pane layoutX="7.0" layoutY="6.0" prefHeight="458.0" prefWidth="699.0" style="-fx-background-color: gray;">
          <children>
             <TextArea fx:id="textArea" layoutX="350.0" layoutY="43.0" prefHeight="408.0" prefWidth="342.0" style="-fx-border-color: Black;" />
-            <Button layoutX="463.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Clear Console" />
+            <Button fx:id="clearTextAreaButton" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#clearTextArea" prefHeight="25.0" prefWidth="116.0" text="Clear Console" />
             <Pane layoutX="14.0" layoutY="14.0" prefHeight="101.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
                <children>
                   <ChoiceBox fx:id="choiceBox" layoutX="4.0" layoutY="5.0" prefHeight="25.0" prefWidth="160.0" style="-fx-border-color: black;" />
                   <Button fx:id="connectToGateway" layoutX="49.0" layoutY="51.0" mnemonicParsing="false" onAction="#connectToSite" prefHeight="25.0" prefWidth="70.0" text="Connect" />
                   <Button fx:id="addGateway" layoutX="169.0" layoutY="38.0" mnemonicParsing="false" onAction="#addGateway" prefHeight="25.0" prefWidth="70.0" text="Add GW" />
-                  <Button fx:id="deleteGateway" layoutX="244.0" layoutY="38.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Del GW" />
+                  <Button fx:id="deleteGateway" layoutX="244.0" layoutY="38.0" mnemonicParsing="false" onAction="#deleteGateway" prefHeight="25.0" prefWidth="70.0" text="Del GW" />
                   <Button fx:id="editGateway" layoutX="169.0" layoutY="70.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Edit GW" />
                </children>
             </Pane>

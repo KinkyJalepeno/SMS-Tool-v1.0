@@ -25,8 +25,8 @@ public class AddGatewayController {
             errorLabel.setText("Error: Fill in all fields");
         }else {
 
-            AddNewGateway addGateway = new AddNewGateway(sqlCommand);
-            addGateway.writeToDatabase();
+            DatabaseCommand executeCommand = new DatabaseCommand(sqlCommand);
+            executeCommand.command();
 
             errorLabel.setText("Submit OK");
             siteList.action();
