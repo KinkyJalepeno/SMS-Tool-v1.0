@@ -1,5 +1,7 @@
-package SenderMain;
+package Controller;
 
+import SenderMain.DatabaseCommand;
+import SenderMain.GetSiteList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;

@@ -10,7 +10,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Main Window.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../GUI/Main Window.fxml"));
         primaryStage.setTitle("Dave's SMS Tool");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

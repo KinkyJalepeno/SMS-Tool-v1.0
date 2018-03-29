@@ -1,5 +1,6 @@
-package SenderMain;
+package Controller;
 
+import SenderMain.DatabaseCommand;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -66,7 +67,7 @@ public class MainWindowController implements Initializable{
     private void addGateway() {
         try {
             Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("Add Gateway Window.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/Add Gateway Window.fxml"));
             Parent root1 = loader.load();
 
             AddGatewayController controller = loader.getController();
