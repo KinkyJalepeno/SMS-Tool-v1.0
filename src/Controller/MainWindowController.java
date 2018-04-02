@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
@@ -21,10 +22,10 @@ import java.util.ResourceBundle;
 public class MainWindowController implements Initializable{
 
 
-    @FXML
-    private ChoiceBox<String> choiceBox;
-    @FXML
-    private TextArea textArea;
+    @FXML private ChoiceBox<String> choiceBox;
+    @FXML private TextArea textArea;
+    @FXML private Label connectionStatusLabel;
+    @FXML private Label serverStatusLabel;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

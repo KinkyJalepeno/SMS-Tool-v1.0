@@ -13,7 +13,7 @@
    <children>
       <Pane layoutX="7.0" layoutY="6.0" prefHeight="458.0" prefWidth="699.0" style="-fx-background-color: gray;">
          <children>
-            <TextArea fx:id="textArea" layoutX="350.0" layoutY="43.0" prefHeight="408.0" prefWidth="342.0" style="-fx-border-color: Black;" />
+            <TextArea fx:id="textArea" layoutX="350.0" layoutY="77.0" prefHeight="374.0" prefWidth="342.0" style="-fx-border-color: Black;" />
             <Button fx:id="clearTextAreaButton" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#clearTextArea" prefHeight="25.0" prefWidth="116.0" text="Clear Console" />
             <Pane layoutX="14.0" layoutY="14.0" prefHeight="101.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
                <children>
@@ -62,6 +62,26 @@
                      </font>
                   </Label>
                </children></Pane>
+            <Label layoutX="350.0" layoutY="48.0" text="Conn Status:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="529.0" layoutY="48.0" text="Server Status:">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="connectionStatusLabel" layoutX="431.0" layoutY="48.0" text="Disconnected" textFill="#bc0000bf">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="serverStatusLabel" layoutX="615.0" layoutY="48.0" text="Unkown" textFill="#c90000c7">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
