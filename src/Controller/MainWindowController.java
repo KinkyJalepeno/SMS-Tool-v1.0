@@ -59,6 +59,25 @@ public class MainWindowController implements Initializable{
         textArea.appendText("SQLite loaded\n");
     }
 
+    public void readDatabaseRow(){
+
+        String sqlCommand = "SELECT * FROM gateways WHERE site_name = '" + choiceBox.getValue() + "';";
+        System.out.println(sqlCommand);
+
+        DatabaseCommand sendCommand = null;
+        try {
+            sendCommand = new DatabaseCommand(sqlCommand);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        sendCommand.editCommand();
+
+        System.out.println(sendCommand.getSite());
+        System.out.println(sendCommand.getAddress());
+        System.out.println(sendCommand.getPassword());
+
+    }
+
     @FXML
     private void clearTextArea(){
 
@@ -105,6 +124,29 @@ public class MainWindowController implements Initializable{
             textArea.appendText(gateWay + " successfully deleted from DB\n");
             getSiteList();
             choiceBox.setValue("");
+        }
+    }
+    @FXML
+    private void editGateway(){
+
+        String site = choiceBox.getValue();
+        if(site == null){
+            textArea.setText("Please select a site to edit !");
+        }else {
+//            try{
+//                Stage stage = new Stage();
+//                FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/EditGatewayWindow.FXML"));
+//
+//            }catch(Exception e){
+//                e.printStackTrace();
+//            }
+
+
+
+
+
+
+            readDatabaseRow();
         }
     }
     @FXML

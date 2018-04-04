@@ -1,15 +1,16 @@
 package SenderMain;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class DatabaseCommand {
 
     private Connection conn;
     private String url;
     private String sqlCommand;
+
+    private String site;
+    private String address;
+    private String pass;
 
 
     public DatabaseCommand(String sqlCommand) throws SQLException {
@@ -24,8 +25,39 @@ public class DatabaseCommand {
         try {
             Statement stmt = conn.createStatement();
             stmt.executeQuery(sqlCommand);
+
         } catch (SQLException e) {
             System.out.print(e.getMessage());
         }
     }//end command execution
+
+    public void editCommand(){
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlCommand);
+
+            site = rs.getString("site_name");
+            address = rs.getString("ip_address");
+            pass = rs.getString("password");
+
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
+        }
+    }
+
+    public String getSite(){
+
+        return site;
+    }
+
+    public String getAddress(){
+
+        return address;
+    }
+
+    public String getPassword(){
+
+        return pass;
+    }
 }
