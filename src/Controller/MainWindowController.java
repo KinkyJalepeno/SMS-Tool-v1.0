@@ -1,6 +1,7 @@
 package Controller;
 
 import SenderMain.DatabaseCommand;
+import SenderMain.GetConnection;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -14,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.Collator;
@@ -26,6 +28,10 @@ public class MainWindowController implements Initializable{
     @FXML private TextArea textArea;
     @FXML private Label connectionStatusLabel;
     @FXML private Label serverStatusLabel;
+
+    private String site;
+    private String address;
+    private String pass;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -62,7 +68,7 @@ public class MainWindowController implements Initializable{
     public void readDatabaseRow(){
 
         String sqlCommand = "SELECT * FROM gateways WHERE site_name = '" + choiceBox.getValue() + "';";
-        System.out.println(sqlCommand);
+        //System.out.println(sqlCommand);
 
         DatabaseCommand sendCommand = null;
         try {
@@ -70,11 +76,11 @@ public class MainWindowController implements Initializable{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        sendCommand.editCommand();
+        sendCommand.readRow();
 
-        System.out.println(sendCommand.getSite());
-        System.out.println(sendCommand.getAddress());
-        System.out.println(sendCommand.getPassword());
+        site = sendCommand.getSite();
+        address = sendCommand.getAddress();
+        pass = sendCommand.getPassword();
 
     }
 
@@ -157,10 +163,18 @@ public class MainWindowController implements Initializable{
         textArea.appendText("You must select a site from the dropdown first !\n");
         return;
     }else {
-        textArea.setText("You selected " + choice);
+        //textArea.setText("You selected " + choice);
+        readDatabaseRow();
+        System.out.println(site + " " + address + " " + pass);
+        }
+        try (GetConnection conn = new GetConnection(address)){
+
+            String authenticationResult = conn.authenticate(pass);
+            textArea.setText(authenticationResult);
+
+        }catch(Exception e){
+        e.printStackTrace();
         }
 
     }//end connect to site method
-
-
 }//End class

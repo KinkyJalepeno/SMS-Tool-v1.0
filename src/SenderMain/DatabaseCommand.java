@@ -7,6 +7,7 @@ public class DatabaseCommand {
     private Connection conn;
     private String url;
     private String sqlCommand;
+    private Statement stmt;
 
     private String site;
     private String address;
@@ -17,13 +18,15 @@ public class DatabaseCommand {
 
         url = "jdbc:sqlite:C://sqlite/sites.db";
         conn = DriverManager.getConnection(url);
+        stmt = conn.createStatement();
         this.sqlCommand = sqlCommand;
+
 
     }//end set up connection constructor
 
     public void command() {
         try {
-            Statement stmt = conn.createStatement();
+            //Statement stmt = conn.createStatement();
             stmt.executeQuery(sqlCommand);
 
         } catch (SQLException e) {
@@ -31,20 +34,6 @@ public class DatabaseCommand {
         }
     }//end command execution
 
-    public void editCommand(){
-
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sqlCommand);
-
-            site = rs.getString("site_name");
-            address = rs.getString("ip_address");
-            pass = rs.getString("password");
-
-        } catch (SQLException e) {
-            System.out.print(e.getMessage());
-        }
-    }
 
     public String getSite(){
 
@@ -59,5 +48,19 @@ public class DatabaseCommand {
     public String getPassword(){
 
         return pass;
+    }
+
+    public void readRow() {
+        try {
+            //Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sqlCommand);
+
+            site = rs.getString("site_name");
+            address = rs.getString("ip_address");
+            pass = rs.getString("password");
+
+        } catch (SQLException e) {
+            System.out.print(e.getMessage());
+        }
     }
 }
