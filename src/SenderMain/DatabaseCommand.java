@@ -49,7 +49,7 @@ public class DatabaseCommand {
         return pass;
     }
 
-    public void readRow() {
+    public void readRow() throws SQLException {
         try {
             //Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sqlCommand);
@@ -61,5 +61,6 @@ public class DatabaseCommand {
         } catch (SQLException e) {
             System.out.print(e.getMessage());
         }
+        conn.close();
     }
 }

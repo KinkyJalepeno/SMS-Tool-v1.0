@@ -20,7 +20,10 @@ public class EditGatewayController {
         String site = siteNameField.getText();
         String address = ipAddressField.getText();
         String pass = smsPasswordField.getText();
-        String sqlCommand = ("INSERT INTO gateways VALUES ('" + site + "','" + address + "','" + pass + "')");
+        String sqlCommand = ("UPDATE gateways SET ip_address = '" + address + "', password = " +
+                "'" + pass + "' WHERE site_name = '" + site + "';");
+
+        System.out.println(sqlCommand);
 
         if(site.equals("") || address.equals("") || pass.equals("")){
             errorLabel.setText("Error: Fill in all fields");

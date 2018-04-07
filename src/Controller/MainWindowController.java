@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
@@ -37,7 +36,6 @@ public class MainWindowController implements Initializable{
 
         try {
             getSiteList();
-            //MainWindowController mainWindowController = new MainWindowController();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -73,10 +71,11 @@ public class MainWindowController implements Initializable{
         DatabaseCommand sendCommand = null;
         try {
             sendCommand = new DatabaseCommand(sqlCommand);
+            sendCommand.readRow();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        sendCommand.readRow();
+        //sendCommand.readRow();
 
         this.site = sendCommand.getSite();
         this.address = sendCommand.getAddress();
@@ -179,6 +178,7 @@ public class MainWindowController implements Initializable{
 
         }catch(Exception e){
         e.printStackTrace();
+        textArea.setText("Check server details, connection timed out...");
         }
 
     }//end connect to site method
