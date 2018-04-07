@@ -15,7 +15,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.Collator;
@@ -26,8 +25,8 @@ public class MainWindowController implements Initializable{
 
     @FXML private ChoiceBox<String> choiceBox;
     @FXML private TextArea textArea;
-    @FXML private Label connectionStatusLabel;
-    @FXML private Label serverStatusLabel;
+    //@FXML private Label connectionStatusLabel;
+    //@FXML private Label serverStatusLabel;
 
     private String site;
     private String address;
@@ -38,6 +37,7 @@ public class MainWindowController implements Initializable{
 
         try {
             getSiteList();
+            //MainWindowController mainWindowController = new MainWindowController();
         }catch(SQLException e){
             e.printStackTrace();
         }
@@ -78,9 +78,9 @@ public class MainWindowController implements Initializable{
         }
         sendCommand.readRow();
 
-        site = sendCommand.getSite();
-        address = sendCommand.getAddress();
-        pass = sendCommand.getPassword();
+        this.site = sendCommand.getSite();
+        this.address = sendCommand.getAddress();
+        this.pass = sendCommand.getPassword();
 
     }
 
@@ -133,26 +133,29 @@ public class MainWindowController implements Initializable{
         }
     }
     @FXML
-    private void editGateway(){
+    private void editGateway() {
 
         String site = choiceBox.getValue();
-        if(site == null){
+        if (site == null) {
             textArea.setText("Please select a site to edit !");
-        }else {
-//            try{
-//                Stage stage = new Stage();
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("GUI/EditGatewayWindow.FXML"));
-//
-//            }catch(Exception e){
-//                e.printStackTrace();
-//            }
+        } else {
+            try {
+                Stage stage = new Stage();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/EditGatewayWindow.fxml"));
+                Parent root1 = loader.load();
 
+                readDatabaseRow();
 
+                EditGatewayController controller = loader.getController();
+                controller.setInitialValues(site, address, pass);
 
+                stage.setTitle("Add a Gateway");
+                stage.setScene(new Scene(root1));
+                stage.show();
 
-
-
-            readDatabaseRow();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
     @FXML
@@ -171,6 +174,8 @@ public class MainWindowController implements Initializable{
 
             String authenticationResult = conn.authenticate(pass);
             textArea.setText(authenticationResult);
+
+
 
         }catch(Exception e){
         e.printStackTrace();

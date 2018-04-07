@@ -1,7 +1,6 @@
 package Controller;
 
 import SenderMain.DatabaseCommand;
-import SenderMain.GetSiteList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -34,4 +33,12 @@ public class EditGatewayController {
         }//end if-else
 
     }//end submitGatewayDetails method
+
+    public void setInitialValues(String site, String address, String password){
+
+        siteNameField.setText(site);
+        ipAddressField.setText(address);
+        smsPasswordField.setText(password);
+
+    }
 } //end class

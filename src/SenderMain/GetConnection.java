@@ -21,8 +21,11 @@ public class GetConnection implements AutoCloseable{
         output = new PrintWriter(socket.getOutputStream(), true);
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
+    }//TODO This is where I'm up to on initial connection - needs the method and data
+    public String getServerStatus(String pass) throws IOException {
+        Command getStatusCommand = new Command("PLACEHOLDER", "PLACEHOLDER");
+        return executeCommand(getStatusCommand);
     }
-
 
     public String authenticate(String pass) throws IOException {
         Command authenticationCommand = new Command("authentication", "\"server_password\":\"" + pass + "\"");

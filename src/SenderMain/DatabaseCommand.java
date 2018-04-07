@@ -26,7 +26,6 @@ public class DatabaseCommand {
 
     public void command() {
         try {
-            //Statement stmt = conn.createStatement();
             stmt.executeQuery(sqlCommand);
 
         } catch (SQLException e) {
