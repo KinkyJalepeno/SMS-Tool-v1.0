@@ -162,7 +162,7 @@ public class MainWindowController implements Initializable{
 
     String choice = choiceBox.getValue();
     if (choice == null){
-        textArea.appendText("You must select a site from the dropdown first !\n");
+        textArea.appendText("You must select a site from the drop-down first !\n");
         return;
     }else {
         //textArea.setText("You selected " + choice);
