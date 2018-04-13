@@ -13,6 +13,7 @@
    <children>
       <Pane layoutX="7.0" layoutY="6.0" prefHeight="458.0" prefWidth="699.0" style="-fx-background-color: gray;">
          <children>
+            <Pane layoutX="349.0" layoutY="46.0" prefHeight="25.0" prefWidth="342.0" style="-fx-background-color: rgb(169,169,169); -fx-border-color: black;" />
             <TextArea fx:id="textArea" layoutX="350.0" layoutY="77.0" prefHeight="374.0" prefWidth="342.0" style="-fx-border-color: Black;" />
             <Button fx:id="clearTextAreaButton" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#clearTextArea" prefHeight="25.0" prefWidth="116.0" text="Clear Console" />
             <Pane layoutX="14.0" layoutY="14.0" prefHeight="101.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
@@ -21,7 +22,7 @@
                   <Button fx:id="connectToGateway" layoutX="49.0" layoutY="51.0" mnemonicParsing="false" onAction="#connectToSite" prefHeight="25.0" prefWidth="70.0" text="Connect" />
                   <Button fx:id="addGateway" layoutX="169.0" layoutY="38.0" mnemonicParsing="false" onAction="#addGateway" prefHeight="25.0" prefWidth="70.0" text="Add GW" />
                   <Button fx:id="deleteGateway" layoutX="244.0" layoutY="38.0" mnemonicParsing="false" onAction="#deleteGateway" prefHeight="25.0" prefWidth="70.0" text="Del GW" />
-                  <Button fx:id="editGateway" layoutX="169.0" layoutY="70.0" onAction="#editGateway" mnemonicParsing="false" prefHeight="25.0" prefWidth="70.0" text="Edit GW" />
+                  <Button fx:id="editGateway" layoutX="169.0" layoutY="70.0" mnemonicParsing="false" onAction="#editGateway" prefHeight="25.0" prefWidth="70.0" text="Edit GW" />
                </children>
             </Pane>
             <Pane layoutX="14.0" layoutY="125.0" prefHeight="158.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
@@ -62,22 +63,22 @@
                      </font>
                   </Label>
                </children></Pane>
-            <Label layoutX="350.0" layoutY="48.0" text="Conn Status:">
+            <Label layoutX="357.0" layoutY="48.0" text="Conn Status:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="529.0" layoutY="48.0" text="Server Status:">
+            <Label layoutX="536.0" layoutY="48.0" text="Server Status:">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="connectionStatusLabel" layoutX="431.0" layoutY="48.0" text="Disconnected" textFill="#bc0000bf">
+            <Label fx:id="connectionStatusLabel" layoutX="438.0" layoutY="48.0" text="Disconnected" textFill="#bc0000bf">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="serverStatusLabel" layoutX="615.0" layoutY="48.0" text="Unkown" textFill="#c90000c7">
+            <Label fx:id="serverStatusLabel" layoutX="622.0" layoutY="48.0" text="Unkown" textFill="#c90000c7">
                <font>
                   <Font size="14.0" />
                </font>

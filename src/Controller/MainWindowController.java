@@ -2,6 +2,7 @@ package Controller;
 
 import SenderMain.DatabaseCommand;
 import SenderMain.GetConnection;
+import SenderMain.JsonJob;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -11,9 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.Socket;
 import java.net.URL;
 import java.sql.*;
@@ -25,8 +29,8 @@ public class MainWindowController implements Initializable{
 
     @FXML private ChoiceBox<String> choiceBox;
     @FXML private TextArea textArea;
-    //@FXML private Label connectionStatusLabel;
-    //@FXML private Label serverStatusLabel;
+    @FXML private Label connectionStatusLabel;
+    @FXML private Label serverStatusLabel;
 
     private String site;
     private String address;
@@ -178,8 +182,12 @@ public class MainWindowController implements Initializable{
 
             GetConnection conn = new GetConnection(socket);
             String authenticationResult = conn.authenticate(pass);
-            textArea.setText(authenticationResult);
+            textArea.setText(authenticationResult +"\n\n");
 
+            connectionStatusLabel.setText("Connected");
+            connectionStatusLabel.setTextFill(Color.GREEN);
+
+            getServerStatus();
 
         }catch(Exception e){
         e.printStackTrace();
@@ -187,4 +195,37 @@ public class MainWindowController implements Initializable{
         }
 
     }//end connect to site method
+
+    private void getServerStatus() throws IOException {
+
+        GetConnection conn = new GetConnection(socket);
+        String response = conn.getServerStatus();
+
+        JsonJob getStatus = new JsonJob(response);
+        getStatus.parseStatus();
+
+        String serverStatus = getStatus.getServerCurrentStatus();
+        String emailStatus = getStatus.getEmailStatus();
+        String email2smsStatus = getStatus.getEmail2smsStatus();
+        String sqlStatus = getStatus.getMySqlStatus();
+
+        serverStatusLabel.setText(getStatus.getServerCurrentStatus());
+
+        if(serverStatus.equals("Running")){
+            serverStatusLabel.setTextFill(Color.GREEN);
+        }else{
+            serverStatusLabel.setTextFill(Color.RED);
+        }
+
+        textArea.appendText("Email2SMS Service: " +getStatus.getEmail2smsStatus() +"\n");
+        textArea.appendText("Email Service: " + getStatus.getEmailStatus() +"\n");
+        textArea.appendText("MySql Service: " + getStatus.getMySqlStatus() +"\n");
+//
+//        System.out.println(emailStatus);
+//        System.out.println(email2smsStatus);
+//        System.out.println(sqlStatus);
+
+
+    }
+
 }//End class

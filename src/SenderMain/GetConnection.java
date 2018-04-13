@@ -6,14 +6,13 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class GetConnection implements AutoCloseable{
+public class GetConnection {
 
     private final PrintWriter output;
     private final BufferedReader input;
-    private Socket socket;
 
     public GetConnection(Socket socket) throws IOException {
-        this.socket = socket;
+
         output = new PrintWriter(socket.getOutputStream(), true);
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
@@ -34,12 +33,11 @@ public class GetConnection implements AutoCloseable{
         return input.readLine();
     }
 
-    @Override
-    public void close() throws Exception {
-        socket.close();
-        input.close();
-        output.close();
+    public String getServerStatus() throws IOException {
+
+        output.println("{\"method\":\"get_server_status\"}");
+        String response = input.readLine();
+
+        return response;
     }
-
-
 }//end class
