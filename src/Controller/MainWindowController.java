@@ -33,6 +33,8 @@ public class MainWindowController implements Initializable{
     private String pass;
     private Socket socket;
 
+    private int port = 63333;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -167,16 +169,17 @@ public class MainWindowController implements Initializable{
         textArea.appendText("You must select a site from the drop-down first !\n");
         return;
     }else {
-        //textArea.setText("You selected " + choice);
         readDatabaseRow();
+
         System.out.println(site + " " + address + " " + pass);
         }
-        try (GetConnection conn = new GetConnection(address)){
+        try {
+            socket = new Socket(address, port);
 
+            GetConnection conn = new GetConnection(socket);
             String authenticationResult = conn.authenticate(pass);
             textArea.setText(authenticationResult);
 
-        //TODO Here I want to access the socket again while its open to send a getStatus command
 
         }catch(Exception e){
         e.printStackTrace();

@@ -8,16 +8,12 @@ import java.net.Socket;
 
 public class GetConnection implements AutoCloseable{
 
-    private int port = 63333;
-
-
-    private final Socket socket;
     private final PrintWriter output;
     private final BufferedReader input;
+    private Socket socket;
 
-    public GetConnection(String address) throws IOException {
-
-        socket = new Socket(address, port);
+    public GetConnection(Socket socket) throws IOException {
+        this.socket = socket;
         output = new PrintWriter(socket.getOutputStream(), true);
         input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
