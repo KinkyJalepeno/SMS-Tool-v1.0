@@ -14,6 +14,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
 
+import java.net.Socket;
 import java.net.URL;
 import java.sql.*;
 import java.text.Collator;
@@ -30,6 +31,7 @@ public class MainWindowController implements Initializable{
     private String site;
     private String address;
     private String pass;
+    private Socket socket;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -174,7 +176,7 @@ public class MainWindowController implements Initializable{
             String authenticationResult = conn.authenticate(pass);
             textArea.setText(authenticationResult);
 
-
+        //TODO Here I want to access the socket again while its open to send a getStatus command
 
         }catch(Exception e){
         e.printStackTrace();
