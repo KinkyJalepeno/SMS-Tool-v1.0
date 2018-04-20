@@ -10,6 +10,13 @@ public class JsonJob {
     private String email2smsStatus;
     private String mySqlStatus;
 
+    private String reply;
+    private String number;
+    private String cardAddress;
+    private String portNumber;
+    //private String activeSim;
+
+
     private Object obj;
     private JSONObject jsonObject;
 
@@ -48,4 +55,37 @@ public class JsonJob {
 
         return mySqlStatus;
     }
+
+
+    public void parseResponse() {
+
+        number = (String) jsonObject.get("number");
+        cardAddress = (String) jsonObject.get("card_add");
+        portNumber = (String) jsonObject.get("port_num");
+        //activeSim = (String) jsonObject.get("active_sim");
+        reply = (String) jsonObject.get("reply");
+    }
+
+    public String getNumber(){
+        return number;
+    }
+
+    public String getReply(){
+        return reply;
+    }
+
+    public String getCardAddress(){
+        return cardAddress;
+    }
+
+    public String getPortNumber(){
+        return portNumber;
+    }
+
+//    public String getActiveSim(){
+//        return activeSim;
+//    }
+
+
+
 }

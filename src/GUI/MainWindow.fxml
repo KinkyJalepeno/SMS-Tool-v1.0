@@ -28,7 +28,7 @@
             <Pane layoutX="14.0" layoutY="125.0" prefHeight="158.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
                <children>
                   <TextField fx:id="mobileNumberField" alignment="CENTER" layoutX="173.0" layoutY="8.0" prefHeight="25.0" prefWidth="131.0" promptText="Enter Mobile Number" style="-fx-border-color: Red;" />
-                  <Button fx:id="sendRandomPortButton" layoutX="14.0" layoutY="41.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Random Port" />
+                  <Button fx:id="sendRandomPortButton" layoutX="14.0" layoutY="41.0" mnemonicParsing="false" onAction="#sendRandomPortButton" prefHeight="25.0" prefWidth="116.0" text="Random Port" />
                   <Button fx:id="sendCardPortButton" layoutX="14.0" layoutY="80.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="Single Card/Port" />
                   <Label layoutX="15.0" layoutY="9.0" text="SMS Sending Options" textOverrun="CLIP">
                      <font>

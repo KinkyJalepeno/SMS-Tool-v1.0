@@ -40,4 +40,15 @@ public class GetConnection {
 
         return response;
     }
+
+    public String sendRandomText(String mobileNumber) throws IOException {
+
+        output.println("{\"number\":\"" + mobileNumber + "\", \"msg\":\"Random port test\",\"queue_type\":\"master\",\"unicode\":\"5\"}");
+
+        String response = input.readLine();
+        //TODO Skip the above server response, it's not needed but store the next
+        response = input.readLine();
+
+        return response;
+    }
 }//end class

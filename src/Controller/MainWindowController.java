@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
@@ -31,6 +32,7 @@ public class MainWindowController implements Initializable{
     @FXML private TextArea textArea;
     @FXML private Label connectionStatusLabel;
     @FXML private Label serverStatusLabel;
+    @FXML private TextField mobileNumberField;
 
     private String site;
     private String address;
@@ -48,7 +50,6 @@ public class MainWindowController implements Initializable{
             e.printStackTrace();
         }
     }
-
     public void getSiteList() throws SQLException {
 
         String sqlCommand = "SELECT * FROM gateways";
@@ -70,7 +71,6 @@ public class MainWindowController implements Initializable{
         choiceBox.setItems(new SortedList<String>(list, Collator.getInstance()));
         textArea.appendText("SQLite loaded\n");
     }
-
     public void readDatabaseRow(){
 
         String sqlCommand = "SELECT * FROM gateways WHERE site_name = '" + choiceBox.getValue() + "';";
@@ -165,6 +165,8 @@ public class MainWindowController implements Initializable{
             }
         }
     }
+
+
     @FXML
     private void connectToSite(){
 
@@ -195,7 +197,6 @@ public class MainWindowController implements Initializable{
         }
 
     }//end connect to site method
-
     private void getServerStatus() throws IOException {
 
         GetConnection conn = new GetConnection(socket);
@@ -205,10 +206,6 @@ public class MainWindowController implements Initializable{
         getStatus.parseStatus();
 
         String serverStatus = getStatus.getServerCurrentStatus();
-        String emailStatus = getStatus.getEmailStatus();
-        String email2smsStatus = getStatus.getEmail2smsStatus();
-        String sqlStatus = getStatus.getMySqlStatus();
-
         serverStatusLabel.setText(getStatus.getServerCurrentStatus());
 
         if(serverStatus.equals("Running")){
@@ -217,15 +214,36 @@ public class MainWindowController implements Initializable{
             serverStatusLabel.setTextFill(Color.RED);
         }
 
-        textArea.appendText("Email2SMS Service: " +getStatus.getEmail2smsStatus() +"\n");
+        textArea.appendText("Email2SMS Service: " + getStatus.getEmail2smsStatus() +"\n");
         textArea.appendText("Email Service: " + getStatus.getEmailStatus() +"\n");
         textArea.appendText("MySql Service: " + getStatus.getMySqlStatus() +"\n");
-//
-//        System.out.println(emailStatus);
-//        System.out.println(email2smsStatus);
-//        System.out.println(sqlStatus);
-
 
     }
+
+    @FXML
+    private void sendRandomPortButton() throws IOException {
+
+        String mobileNumber = mobileNumberField.getText();
+        if(mobileNumber.equals("")){
+            textArea.setText("You must enter a mobile number first !");
+        }else {
+
+            GetConnection connection = new GetConnection(socket);
+            String response = connection.sendRandomText(mobileNumber);
+
+            JsonJob job = new JsonJob(response);
+            job.parseResponse();
+
+            textArea.appendText("Number: \t\t" + job.getNumber() + "\n");
+            textArea.appendText("Card Add: \t" + job.getCardAddress() + "\n");
+            textArea.appendText("Port Num: \t" + job.getPortNumber() + "\n");
+            //textArea.appendText("Sim Pos: " + job.getActiveSim() + "\n");
+            textArea.appendText("Result: \t\t" + job.getReply() + "\n\n");
+
+        }
+
+    }
+
+
 
 }//End class
