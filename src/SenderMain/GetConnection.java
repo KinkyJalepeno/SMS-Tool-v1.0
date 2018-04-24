@@ -1,6 +1,6 @@
 package SenderMain;
 
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextArea;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,7 +45,8 @@ public class GetConnection {
 
     public String sendRandomText(String mobileNumber) throws IOException {
 
-        output.println("{\"number\":\"" + mobileNumber + "\", \"msg\":\"Random port test\",\"queue_type\":\"master\",\"unicode\":\"5\"}");
+        output.println("{\"number\":\"" + mobileNumber + "\", \"msg\":\"Random port test\"," +
+                "\"queue_type\":\"master\",\"unicode\":\"5\"}");
 
         String response = input.readLine();
         //TODO Skip the above server response, it's not needed but store the next
@@ -56,7 +57,8 @@ public class GetConnection {
 
     public String sendToCardPort(String mobileNumber, int card, int port) throws IOException {
 
-        output.println("{\"number\": \"" + mobileNumber + "\",\"msg\": \"Sent from: " + card + "#" + port + "\",\"unicode\":\"2\",\"send_to_sim\":\"" + card + "#" + port + "\"}");
+        output.println("{\"number\": \"" + mobileNumber + "\",\"msg\": \"Sent from: " + card + "#" + port +
+                "\",\"unicode\":\"2\",\"send_to_sim\":\"" + card + "#" + port + "\",\"queue_type\":\"master\"}");
 
         String response = input.readLine();
         //TODO Skip the above server response, it's not needed but store the next
@@ -64,4 +66,24 @@ public class GetConnection {
 
         return response;
     }
+
+    public void sendToAllCardsPorts(String mobileNumber, int card, TextArea textArea) throws IOException {
+
+        for (int i = 1; i < 5; i++) {
+
+            output.println("{\"number\":\"" + mobileNumber + "\",\"msg\":\"Sent from: " + card + "#" + i +
+                    "\",\"unicode\":\"2\",\"send_to_sim\":\"" + card + "#" + i + "\",\"queue_type\":\"master\"}");
+
+            String response = input.readLine();
+            response = input.readLine();
+
+            JsonJob job = new JsonJob(response);
+            job.parseResponse();
+
+            textArea.appendText("Card: " + job.getCardAddress() + " Port: " + job.getPortNumber() + " Reply: " +
+                    job.getReply() + "\n");
+        }
+
+    }
+
 }//end class

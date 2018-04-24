@@ -3,6 +3,9 @@ package Controller;
 import SenderMain.DatabaseCommand;
 import SenderMain.GetConnection;
 import SenderMain.JsonJob;
+
+import Threads.allPortsOfCard;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -35,6 +38,7 @@ public class MainWindowController implements Initializable{
     @FXML private TextField mobileNumberField;
     @FXML private TextField cardField;
     @FXML private TextField portField;
+    @FXML private TextField cardAddressField;
 
     private String site;
     private String address;
@@ -228,6 +232,7 @@ public class MainWindowController implements Initializable{
     @FXML
     private void sendRandomPortButton() throws IOException {
 
+        textArea.setText("Sending..................\n\n");
         String mobileNumber = mobileNumberField.getText();
         if(mobileNumber.equals("")){
             textArea.setText("You must enter a mobile number first !");
@@ -244,6 +249,7 @@ public class MainWindowController implements Initializable{
     @FXML
     private void cardPortButton() throws IOException {
 
+        textArea.setText("Sending..................\n\n");
         String mobileNumber = mobileNumberField.getText();
         if(mobileNumber.equals("")){
             textArea.setText("You must enter a mobile number first numpty !");
@@ -251,12 +257,12 @@ public class MainWindowController implements Initializable{
         }
         int cardCheck = Integer.parseInt(cardField.getText());
         if(cardCheck < 21 || cardCheck >28){
-            textArea.appendText("You must enter a card address from 21 - 28 \n");
+            textArea.setText("You must enter a card address from 21 - 28 \n");
             return;
         }
         int portCheck = Integer.parseInt(portField.getText());
         if(portCheck < 1 || portCheck >4){
-            textArea.appendText("You must enter a port number from 1 to 4 \n");
+            textArea.setText("You must enter a port number from 1 to 4 \n");
             return;
         }else{
 
@@ -264,9 +270,27 @@ public class MainWindowController implements Initializable{
             String response = connection.sendToCardPort(mobileNumber, cardCheck, portCheck);
 
             displayResult(response);
-            //System.out.println(mobileNumber + cardCheck + portCheck);
 
         }
+    }
+    @FXML
+    private void allPortsOfCardButton(){
+
+        textArea.setText("Sending....................\n\n");
+        String card = cardAddressField.getText();
+            if(card.equals("")){
+                textArea.setText("You must enter a card address first.");
+            }
+            int cardCheck = Integer.parseInt(cardAddressField.getText());
+                if(cardCheck <21 || cardCheck >28){
+                    textArea.setText("You must enter card address as 21 to 28");
+                }
+                if(mobileNumberField.getText().equals("")){
+                    textArea.setText("Enter a mobile number numpty!");
+                    return;
+                }
+
+        (new Thread(new allPortsOfCard(socket, cardCheck, mobileNumberField.getText(), textArea))).start();
     }
 
     private void displayResult(String response){

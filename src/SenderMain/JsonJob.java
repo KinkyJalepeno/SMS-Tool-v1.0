@@ -62,7 +62,6 @@ public class JsonJob {
         number = (String) jsonObject.get("number");
         cardAddress = (String) jsonObject.get("card_add");
         portNumber = (String) jsonObject.get("port_num");
-        //activeSim = (String) jsonObject.get("active_sim");
         reply = (String) jsonObject.get("reply");
     }
 
