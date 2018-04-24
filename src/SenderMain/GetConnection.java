@@ -1,5 +1,7 @@
 package SenderMain;
 
+import javafx.scene.control.TextField;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -44,6 +46,17 @@ public class GetConnection {
     public String sendRandomText(String mobileNumber) throws IOException {
 
         output.println("{\"number\":\"" + mobileNumber + "\", \"msg\":\"Random port test\",\"queue_type\":\"master\",\"unicode\":\"5\"}");
+
+        String response = input.readLine();
+        //TODO Skip the above server response, it's not needed but store the next
+        response = input.readLine();
+
+        return response;
+    }
+
+    public String sendToCardPort(String mobileNumber, int card, int port) throws IOException {
+
+        output.println("{\"number\": \"" + mobileNumber + "\",\"msg\": \"Sent from: " + card + "#" + port + "\",\"unicode\":\"2\",\"send_to_sim\":\"" + card + "#" + port + "\"}");
 
         String response = input.readLine();
         //TODO Skip the above server response, it's not needed but store the next

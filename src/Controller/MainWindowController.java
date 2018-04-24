@@ -33,6 +33,8 @@ public class MainWindowController implements Initializable{
     @FXML private Label connectionStatusLabel;
     @FXML private Label serverStatusLabel;
     @FXML private TextField mobileNumberField;
+    @FXML private TextField cardField;
+    @FXML private TextField portField;
 
     private String site;
     private String address;
@@ -41,6 +43,7 @@ public class MainWindowController implements Initializable{
 
     private int port = 63333;
 
+    // **** This inits the site list in the drop-down box ****
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -71,6 +74,8 @@ public class MainWindowController implements Initializable{
         choiceBox.setItems(new SortedList<String>(list, Collator.getInstance()));
         textArea.appendText("SQLite loaded\n");
     }
+
+    // **** This section contains SQLIte operations ****
     public void readDatabaseRow(){
 
         String sqlCommand = "SELECT * FROM gateways WHERE site_name = '" + choiceBox.getValue() + "';";
@@ -89,12 +94,6 @@ public class MainWindowController implements Initializable{
         this.address = sendCommand.getAddress();
         this.pass = sendCommand.getPassword();
 
-    }
-
-    @FXML
-    private void clearTextArea(){
-
-        textArea.clear();
     }
     @FXML
     private void addGateway() {
@@ -166,7 +165,7 @@ public class MainWindowController implements Initializable{
         }
     }
 
-
+    // **** This section sets up comms with selected site ****
     @FXML
     private void connectToSite(){
 
@@ -216,10 +215,16 @@ public class MainWindowController implements Initializable{
 
         textArea.appendText("Email2SMS Service: " + getStatus.getEmail2smsStatus() +"\n");
         textArea.appendText("Email Service: " + getStatus.getEmailStatus() +"\n");
-        textArea.appendText("MySql Service: " + getStatus.getMySqlStatus() +"\n");
+        textArea.appendText("MySql Service: " + getStatus.getMySqlStatus() +"\n\n");
 
     }
 
+    // **** This section is for main UI button operations ****
+    @FXML
+    private void clearTextArea(){
+
+        textArea.clear();
+    }
     @FXML
     private void sendRandomPortButton() throws IOException {
 
@@ -231,19 +236,48 @@ public class MainWindowController implements Initializable{
             GetConnection connection = new GetConnection(socket);
             String response = connection.sendRandomText(mobileNumber);
 
-            JsonJob job = new JsonJob(response);
-            job.parseResponse();
-
-            textArea.appendText("Number: \t\t" + job.getNumber() + "\n");
-            textArea.appendText("Card Add: \t" + job.getCardAddress() + "\n");
-            textArea.appendText("Port Num: \t" + job.getPortNumber() + "\n");
-            //textArea.appendText("Sim Pos: " + job.getActiveSim() + "\n");
-            textArea.appendText("Result: \t\t" + job.getReply() + "\n\n");
+            displayResult(response);
 
         }
 
     }
+    @FXML
+    private void cardPortButton() throws IOException {
 
+        String mobileNumber = mobileNumberField.getText();
+        if(mobileNumber.equals("")){
+            textArea.setText("You must enter a mobile number first numpty !");
+            return;
+        }
+        int cardCheck = Integer.parseInt(cardField.getText());
+        if(cardCheck < 21 || cardCheck >28){
+            textArea.appendText("You must enter a card address from 21 - 28 \n");
+            return;
+        }
+        int portCheck = Integer.parseInt(portField.getText());
+        if(portCheck < 1 || portCheck >4){
+            textArea.appendText("You must enter a port number from 1 to 4 \n");
+            return;
+        }else{
 
+            GetConnection connection = new GetConnection(socket);
+            String response = connection.sendToCardPort(mobileNumber, cardCheck, portCheck);
 
+            displayResult(response);
+            //System.out.println(mobileNumber + cardCheck + portCheck);
+
+        }
+    }
+
+    private void displayResult(String response){
+
+        JsonJob job = new JsonJob(response);
+        job.parseResponse();
+
+        textArea.appendText("Number: \t\t" + job.getNumber() + "\n");
+        textArea.appendText("Card Add: \t" + job.getCardAddress() + "\n");
+        textArea.appendText("Port Num: \t" + job.getPortNumber() + "\n");
+        textArea.appendText("Result: \t\t" + job.getReply() + "\n\n");
+
+    }
 }//End class
