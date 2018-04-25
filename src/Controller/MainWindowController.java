@@ -28,17 +28,25 @@ import java.sql.*;
 import java.text.Collator;
 import java.util.ResourceBundle;
 
-public class MainWindowController implements Initializable{
+public class MainWindowController implements Initializable {
 
 
-    @FXML private ChoiceBox<String> choiceBox;
-    @FXML private TextArea textArea;
-    @FXML private Label connectionStatusLabel;
-    @FXML private Label serverStatusLabel;
-    @FXML private TextField mobileNumberField;
-    @FXML private TextField cardField;
-    @FXML private TextField portField;
-    @FXML private TextField cardAddressField;
+    @FXML
+    private ChoiceBox<String> choiceBox;
+    @FXML
+    private TextArea textArea;
+    @FXML
+    private Label connectionStatusLabel;
+    @FXML
+    private Label serverStatusLabel;
+    @FXML
+    private TextField mobileNumberField;
+    @FXML
+    private TextField cardField;
+    @FXML
+    private TextField portField;
+    @FXML
+    private TextField cardAddressField;
 
     private String site;
     private String address;
@@ -53,10 +61,11 @@ public class MainWindowController implements Initializable{
 
         try {
             getSiteList();
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     public void getSiteList() throws SQLException {
 
         String sqlCommand = "SELECT * FROM gateways";
@@ -72,15 +81,16 @@ public class MainWindowController implements Initializable{
                 String site = rs.getString("site_name");
                 list.addAll(site);
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         choiceBox.setItems(new SortedList<String>(list, Collator.getInstance()));
         textArea.appendText("SQLite loaded\n");
     }
 
+
     // **** This section contains SQLIte operations ****
-    public void readDatabaseRow(){
+    public void readDatabaseRow() {
 
         String sqlCommand = "SELECT * FROM gateways WHERE site_name = '" + choiceBox.getValue() + "';";
         //System.out.println(sqlCommand);
@@ -99,6 +109,7 @@ public class MainWindowController implements Initializable{
         this.pass = sendCommand.getPassword();
 
     }
+
     @FXML
     private void addGateway() {
         try {
@@ -124,14 +135,15 @@ public class MainWindowController implements Initializable{
         }
 
     }
+
     @FXML
     private void deleteGateway() throws SQLException {
 
         String gateWay = choiceBox.getValue();
-        if(gateWay == null){
+        if (gateWay == null) {
             textArea.setText("You must choose an entry to delete from drop-down");
-        }else{
-            String sqlCommand = "DELETE FROM gateways WHERE site_name = '" + gateWay +"';";
+        } else {
+            String sqlCommand = "DELETE FROM gateways WHERE site_name = '" + gateWay + "';";
             //textArea.setText(sqlCommand);
 
             DatabaseCommand executeCommand = new DatabaseCommand(sqlCommand);
@@ -142,6 +154,7 @@ public class MainWindowController implements Initializable{
             choiceBox.setValue("");
         }
     }
+
     @FXML
     private void editGateway() {
 
@@ -169,37 +182,39 @@ public class MainWindowController implements Initializable{
         }
     }
 
+
     // **** This section sets up comms with selected site ****
     @FXML
-    private void connectToSite(){
+    private void connectToSite() {
 
-    String choice = choiceBox.getValue();
-    if (choice == null){
-        textArea.appendText("You must select a site from the drop-down first !\n");
-        return;
-    }else {
-        readDatabaseRow();
+        String choice = choiceBox.getValue();
+        if (choice == null) {
+            textArea.appendText("You must select a site from the drop-down first !\n");
+            return;
+        } else {
+            readDatabaseRow();
 
-        System.out.println(site + " " + address + " " + pass);
+            System.out.println(site + " " + address + " " + pass);
         }
         try {
             socket = new Socket(address, port);
 
             GetConnection conn = new GetConnection(socket);
             String authenticationResult = conn.authenticate(pass);
-            textArea.setText(authenticationResult +"\n\n");
+            textArea.setText(authenticationResult + "\n\n");
 
             connectionStatusLabel.setText("Connected");
             connectionStatusLabel.setTextFill(Color.GREEN);
 
             getServerStatus();
 
-        }catch(Exception e){
-        e.printStackTrace();
-        textArea.setText("Check server details, connection timed out...");
+        } catch (Exception e) {
+            e.printStackTrace();
+            textArea.setText("Check server details, connection timed out...");
         }
 
     }//end connect to site method
+
     private void getServerStatus() throws IOException {
 
         GetConnection conn = new GetConnection(socket);
@@ -211,32 +226,34 @@ public class MainWindowController implements Initializable{
         String serverStatus = getStatus.getServerCurrentStatus();
         serverStatusLabel.setText(getStatus.getServerCurrentStatus());
 
-        if(serverStatus.equals("Running")){
+        if (serverStatus.equals("Running")) {
             serverStatusLabel.setTextFill(Color.GREEN);
-        }else{
+        } else {
             serverStatusLabel.setTextFill(Color.RED);
         }
 
-        textArea.appendText("Email2SMS Service: " + getStatus.getEmail2smsStatus() +"\n");
-        textArea.appendText("Email Service: " + getStatus.getEmailStatus() +"\n");
-        textArea.appendText("MySql Service: " + getStatus.getMySqlStatus() +"\n\n");
+        textArea.appendText("Email2SMS Service: " + getStatus.getEmail2smsStatus() + "\n");
+        textArea.appendText("Email Service: " + getStatus.getEmailStatus() + "\n");
+        textArea.appendText("MySql Service: " + getStatus.getMySqlStatus() + "\n\n");
 
     }
+
 
     // **** This section is for main UI button operations ****
     @FXML
-    private void clearTextArea(){
+    private void clearTextArea() {
 
         textArea.clear();
     }
+
     @FXML
     private void sendToRandomPort() throws IOException {
 
         textArea.setText("Sending..................\n\n");
         String mobileNumber = mobileNumberField.getText();
-        if(mobileNumber.equals("")){
+        if (mobileNumber.equals("")) {
             textArea.setText("You must enter a mobile number first !");
-        }else {
+        } else {
 
             GetConnection connection = new GetConnection(socket);
             String response = connection.sendRandomText(mobileNumber);
@@ -246,57 +263,86 @@ public class MainWindowController implements Initializable{
         }
 
     }
+
     @FXML
     private void sendToSpecificCardPort() throws IOException {
 
         String connectionStatus = connectionStatusLabel.getText();
-        if(connectionStatus.equals("Disconnected")){
+        if (connectionStatus.equals("Disconnected")) {
             textArea.setText("Connect to a gateway first you tard !");
             return;
         }
 
         boolean mobileCheck = mobileNumberCheck();
-        if(mobileCheck == false){
+        if (mobileCheck == false) {
             return;
-        }else{
+        } else {
             boolean cardAddressCheck = cardAddressCheck();
-            if(cardAddressCheck == false){
+            if (cardAddressCheck == false) {
                 return;
-            }else{
+            } else {
                 boolean portCheck = portNumberCheck();
-                if(portCheck == false){
+                if (portCheck == false) {
                     return;
-                }else{
-                       GetConnection connection = new GetConnection(socket);
-                       String response = connection.sendToCardPort(mobileNumberField.getText(), cardField.getText(), portField.getText());
+                } else {
+                    GetConnection connection = new GetConnection(socket);
+                    String response = connection.sendToCardPort(mobileNumberField.getText(), cardField.getText(), portField.getText());
 
-                       displayResult(response);
+                    displayResult(response);
                 }
             }
         }
     }
 
     @FXML
-    private void sendToAllPortsOfCard(){
+    private void sendToAllPortsOfCard() throws IOException {
 
-        textArea.setText("Sending....................\n\n");
-        String card = cardAddressField.getText();
-            if(card.equals("")){
-                textArea.setText("You must enter a card address first.");
+        String connectionStatus = connectionStatusLabel.getText();
+        if (connectionStatus.equals("Disconnected")) {
+            textArea.setText("Connect to a gateway first you tard !");
+            return;
+        }
+
+        boolean mobileCheck = mobileNumberCheck();
+        if (mobileCheck == false) {
+            return;
+        } else {
+            boolean cardAddressCheck = cardAddressCheckTwo();
+            if (cardAddressCheck == false) {
+                return;
+            } else {
+                String cardAdd = cardAddressField.getText();
+                int card = Integer.parseInt(cardAdd);
+                (new Thread(new allPortsOfCard(socket, card, mobileNumberField.getText(), textArea))).start();
             }
-            int cardCheck = Integer.parseInt(cardAddressField.getText());
-                if(cardCheck <21 || cardCheck >28){
-                    textArea.setText("You must enter card address as 21 to 28");
-                }
-                if(mobileNumberField.getText().equals("")){
-                    textArea.setText("Enter a mobile number numpty!");
-                    return;
-                }
-
-        (new Thread(new allPortsOfCard(socket, cardCheck, mobileNumberField.getText(), textArea))).start();
+        }
     }
+//
+//        String connectionStatus = connectionStatusLabel.getText();
+//        if (connectionStatus.equals("Disconnected")) {
+//            textArea.setText("Connect to a gateway first you tard !");
+//            return;
+//        }
+//
+//        boolean mobileCheck = mobileNumberCheck();
+//        if (mobileCheck == false) {
+//            return;
+//        } else {
+//            boolean cardAddressCheck = cardAddressCheck();
+//            if (cardAddressCheck == false) {
+//                return;
+//            } else {
+//                String cardAdd = cardAddressField.getText();
+//                int card = Integer.parseInt(cardAdd);
+//                (new Thread(new allPortsOfCard(socket, card, mobileNumberField.getText(), textArea))).start();
+//
+//            }
+//        }
 
-    private void displayResult(String response){
+
+
+    //Sanity checks before going to send phase
+    private void displayResult(String response) {
 
         JsonJob job = new JsonJob(response);
         job.parseResponse();
@@ -308,10 +354,10 @@ public class MainWindowController implements Initializable{
 
     }
 
-    private boolean mobileNumberCheck(){
+    private boolean mobileNumberCheck() {
 
         String number = mobileNumberField.getText();
-        if(number.equals("")){
+        if (number.equals("")) {
             textArea.setText("Enter number to send to Numpty \n\n");
             return false;
         }
@@ -321,10 +367,10 @@ public class MainWindowController implements Initializable{
     private boolean cardAddressCheck() {
 
         String card = cardField.getText();
-        if(card.equals("")){
+        if (card.equals("")) {
             textArea.setText("Enter a card address !");
             return false;
-        }else {
+        } else {
 
             int cardAddress = Integer.parseInt(cardField.getText());
             if (cardAddress < 21 || cardAddress > 28) {
@@ -336,13 +382,32 @@ public class MainWindowController implements Initializable{
         return true;
     }
 
-    private boolean portNumberCheck(){
+    private boolean cardAddressCheckTwo(){
+
+
+        String card = cardAddressField.getText();
+        if (card.equals("")) {
+            textArea.setText("Enter a card address !");
+            return false;
+        } else {
+
+            int cardAddress = Integer.parseInt(cardAddressField.getText());
+            if (cardAddress < 21 || cardAddress > 28) {
+                textArea.setText("Card address must be between 21 and 28 !");
+                return false;
+            }
+        }
+        textArea.setText("Sending................ \n\n");
+        return true;
+    }
+
+    private boolean portNumberCheck() {
 
         String card = portField.getText();
-        if(card.equals("")){
+        if (card.equals("")) {
             textArea.setText("Enter a port number !\n\n");
             return false;
-        }else {
+        } else {
 
             int cardAddress = Integer.parseInt(portField.getText());
             if (cardAddress < 1 || cardAddress > 4) {

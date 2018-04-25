@@ -3,6 +3,7 @@ package Threads;
 import SenderMain.GetConnection;
 import SenderMain.JsonJob;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -24,7 +25,6 @@ public class allPortsOfCard implements Runnable {
     }
 
     public void run(){
-
         try {
             GetConnection connection = new GetConnection(socket);
             connection.sendToAllCardsPorts(mobile, card, textArea);
