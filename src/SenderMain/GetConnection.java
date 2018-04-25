@@ -55,10 +55,13 @@ public class GetConnection {
         return response;
     }
 
-    public String sendToCardPort(String mobileNumber, int card, int port) throws IOException {
+    public String sendToCardPort(String mobileNumber, String card, String port) throws IOException {
 
-        output.println("{\"number\": \"" + mobileNumber + "\",\"msg\": \"Sent from: " + card + "#" + port +
-                "\",\"unicode\":\"2\",\"send_to_sim\":\"" + card + "#" + port + "\",\"queue_type\":\"master\"}");
+        int cardAddress = Integer.parseInt(card);
+        int portNumber = Integer.parseInt(port);
+
+        output.println("{\"number\": \"" + mobileNumber + "\",\"msg\": \"Sent from: " + cardAddress + "#" + portNumber +
+                "\",\"unicode\":\"2\",\"send_to_sim\":\"" + cardAddress + "#" + portNumber + "\",\"queue_type\":\"master\"}");
 
         String response = input.readLine();
         //TODO Skip the above server response, it's not needed but store the next

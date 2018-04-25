@@ -28,15 +28,15 @@
             <Pane layoutX="14.0" layoutY="125.0" prefHeight="158.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
                <children>
                   <TextField fx:id="mobileNumberField" alignment="CENTER" layoutX="171.0" layoutY="24.0" prefHeight="25.0" prefWidth="131.0" promptText="Enter Mobile Number" style="-fx-border-color: Red;" />
-                  <Button fx:id="sendRandomPortButton" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#sendRandomPortButton" prefHeight="25.0" prefWidth="116.0" text="Random Port" />
-                  <Button fx:id="sendCardPortButton" layoutX="14.0" layoutY="82.0" mnemonicParsing="false" onAction="#cardPortButton" prefHeight="25.0" prefWidth="116.0" text="Single Card/Port" />
+                  <Button fx:id="sendToRandomPort" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#sendToRandomPort" prefHeight="25.0" prefWidth="116.0" text="Random Port" />
+                  <Button fx:id="sendCardPortButton" layoutX="14.0" layoutY="82.0" mnemonicParsing="false" onAction="#sendToSpecificCardPort" prefHeight="25.0" prefWidth="116.0" text="Single Card/Port" />
                   <Label layoutX="165.0" layoutY="3.0" text="SMS Sending Options" textOverrun="CLIP">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
                   <Button fx:id="sendAllPortsButton" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="&quot;ALL&quot; Cards/Ports" />
-                  <Button fx:id="sendCardPortButton1" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" onAction="#allPortsOfCardButton" prefHeight="25.0" prefWidth="116.0" text="All Ports of Card" />
+                  <Button fx:id="sendCardPortButton1" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" onAction="#sendToAllPortsOfCard" prefHeight="25.0" prefWidth="116.0" text="All Ports of Card" />
                   <TextField fx:id="cardField" layoutX="172.0" layoutY="82.0" prefHeight="25.0" prefWidth="32.0" promptText="21" />
                   <TextField fx:id="portField" layoutX="224.0" layoutY="82.0" prefHeight="25.0" prefWidth="32.0" promptText="2" />
                   <Label layoutX="260.0" layoutY="86.0" text="eg: 21#2" />

@@ -230,7 +230,7 @@ public class MainWindowController implements Initializable{
         textArea.clear();
     }
     @FXML
-    private void sendRandomPortButton() throws IOException {
+    private void sendToRandomPort() throws IOException {
 
         textArea.setText("Sending..................\n\n");
         String mobileNumber = mobileNumberField.getText();
@@ -247,34 +247,37 @@ public class MainWindowController implements Initializable{
 
     }
     @FXML
-    private void cardPortButton() throws IOException {
+    private void sendToSpecificCardPort() throws IOException {
 
-        textArea.setText("Sending..................\n\n");
-        String mobileNumber = mobileNumberField.getText();
-        if(mobileNumber.equals("")){
-            textArea.setText("You must enter a mobile number first numpty !");
+        String connectionStatus = connectionStatusLabel.getText();
+        if(connectionStatus.equals("Disconnected")){
+            textArea.setText("Connect to a gateway first you tard !");
             return;
         }
-        int cardCheck = Integer.parseInt(cardField.getText());
-        if(cardCheck < 21 || cardCheck >28){
-            textArea.setText("You must enter a card address from 21 - 28 \n");
-            return;
-        }
-        int portCheck = Integer.parseInt(portField.getText());
-        if(portCheck < 1 || portCheck >4){
-            textArea.setText("You must enter a port number from 1 to 4 \n");
+
+        boolean mobileCheck = mobileNumberCheck();
+        if(mobileCheck == false){
             return;
         }else{
+            boolean cardAddressCheck = cardAddressCheck();
+            if(cardAddressCheck == false){
+                return;
+            }else{
+                boolean portCheck = portNumberCheck();
+                if(portCheck == false){
+                    return;
+                }else{
+                       GetConnection connection = new GetConnection(socket);
+                       String response = connection.sendToCardPort(mobileNumberField.getText(), cardField.getText(), portField.getText());
 
-            GetConnection connection = new GetConnection(socket);
-            String response = connection.sendToCardPort(mobileNumber, cardCheck, portCheck);
-
-            displayResult(response);
-
+                       displayResult(response);
+                }
+            }
         }
     }
+
     @FXML
-    private void allPortsOfCardButton(){
+    private void sendToAllPortsOfCard(){
 
         textArea.setText("Sending....................\n\n");
         String card = cardAddressField.getText();
@@ -304,4 +307,52 @@ public class MainWindowController implements Initializable{
         textArea.appendText("Result: \t\t" + job.getReply() + "\n\n");
 
     }
+
+    private boolean mobileNumberCheck(){
+
+        String number = mobileNumberField.getText();
+        if(number.equals("")){
+            textArea.setText("Enter number to send to Numpty \n\n");
+            return false;
+        }
+        return true;
+    }
+
+    private boolean cardAddressCheck() {
+
+        String card = cardField.getText();
+        if(card.equals("")){
+            textArea.setText("Enter a card address !");
+            return false;
+        }else {
+
+            int cardAddress = Integer.parseInt(cardField.getText());
+            if (cardAddress < 21 || cardAddress > 28) {
+                textArea.setText("Card address must be between 21 and 28 !");
+                return false;
+            }
+        }
+        textArea.setText("Sending................ \n\n");
+        return true;
+    }
+
+    private boolean portNumberCheck(){
+
+        String card = portField.getText();
+        if(card.equals("")){
+            textArea.setText("Enter a port number !\n\n");
+            return false;
+        }else {
+
+            int cardAddress = Integer.parseInt(portField.getText());
+            if (cardAddress < 1 || cardAddress > 4) {
+                textArea.setText("Port number must be between 1 and 4 !\n\n");
+                return false;
+            }
+        }
+        textArea.setText("Sending................ \n\n");
+        return true;
+
+    }
+
 }//End class
