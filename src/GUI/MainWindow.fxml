@@ -16,45 +16,47 @@
             <Pane layoutX="349.0" layoutY="46.0" prefHeight="25.0" prefWidth="342.0" style="-fx-background-color: rgb(169,169,169); -fx-border-color: black;" />
             <TextArea fx:id="textArea" layoutX="350.0" layoutY="77.0" prefHeight="374.0" prefWidth="342.0" style="-fx-border-color: Black;" />
             <Button fx:id="clearTextAreaButton" layoutX="463.0" layoutY="11.0" mnemonicParsing="false" onAction="#clearTextArea" prefHeight="25.0" prefWidth="116.0" text="Clear Console" />
-            <Pane layoutX="14.0" layoutY="14.0" prefHeight="101.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
+            <Pane layoutX="14.0" layoutY="14.0" prefHeight="74.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
                <children>
                   <ChoiceBox fx:id="choiceBox" layoutX="4.0" layoutY="5.0" prefHeight="25.0" prefWidth="160.0" style="-fx-border-color: black;" />
-                  <Button fx:id="connectToGateway" layoutX="49.0" layoutY="51.0" mnemonicParsing="false" onAction="#connectToSite" prefHeight="25.0" prefWidth="70.0" text="Connect" />
+                  <Button fx:id="connectToGateway" layoutX="49.0" layoutY="39.0" mnemonicParsing="false" onAction="#connectToSite" prefHeight="25.0" prefWidth="70.0" text="Connect" />
                   <Button fx:id="addGateway" layoutX="169.0" layoutY="5.0" mnemonicParsing="false" onAction="#addGateway" prefHeight="25.0" prefWidth="70.0" text="Add GW" />
                   <Button fx:id="deleteGateway" layoutX="244.0" layoutY="5.0" mnemonicParsing="false" onAction="#deleteGateway" prefHeight="25.0" prefWidth="70.0" text="Del GW" />
-                  <Button fx:id="editGateway" layoutX="180.0" layoutY="51.0" mnemonicParsing="false" onAction="#editGateway" prefHeight="25.0" prefWidth="119.0" text="View/Edit GW" />
+                  <Button fx:id="editGateway" layoutX="180.0" layoutY="39.0" mnemonicParsing="false" onAction="#editGateway" prefHeight="25.0" prefWidth="119.0" text="View/Edit GW" />
                </children>
             </Pane>
-            <Pane layoutX="14.0" layoutY="125.0" prefHeight="158.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
+            <Pane layoutX="14.0" layoutY="95.0" prefHeight="188.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
                <children>
-                  <TextField fx:id="mobileNumberField" alignment="CENTER" layoutX="171.0" layoutY="24.0" prefHeight="25.0" prefWidth="131.0" promptText="Enter Mobile Number" style="-fx-border-color: Red;" />
-                  <Button fx:id="sendToRandomPort" layoutX="14.0" layoutY="44.0" mnemonicParsing="false" onAction="#sendToRandomPort" prefHeight="25.0" prefWidth="116.0" text="Random Port" />
-                  <Button fx:id="sendCardPortButton" layoutX="14.0" layoutY="82.0" mnemonicParsing="false" onAction="#sendToSpecificCardPort" prefHeight="25.0" prefWidth="116.0" text="Single Card/Port" />
-                  <Label layoutX="165.0" layoutY="3.0" text="SMS Sending Options" textOverrun="CLIP">
+                  <TextField fx:id="mobileNumberField" alignment="CENTER" layoutX="181.0" layoutY="4.0" prefHeight="25.0" prefWidth="131.0" promptText="Enter Mobile Number" style="-fx-border-color: Red;" />
+                  <Button fx:id="sendToRandomPort" layoutX="14.0" layoutY="36.0" mnemonicParsing="false" onAction="#sendToRandomPort" prefHeight="25.0" prefWidth="116.0" text="Random Port" />
+                  <Button fx:id="sendCardPortButton" layoutX="14.0" layoutY="74.0" mnemonicParsing="false" onAction="#sendToSpecificCardPort" prefHeight="25.0" prefWidth="116.0" text="Single Card/Port" />
+                  <Label layoutX="15.0" layoutY="3.0" text="SMS Sending Options" textOverrun="CLIP">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="sendAllPortsButton" layoutX="14.0" layoutY="6.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="116.0" text="&quot;ALL&quot; Cards/Ports" />
-                  <Button fx:id="sendCardPortButton1" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" onAction="#sendToAllPortsOfCard" prefHeight="25.0" prefWidth="116.0" text="All Ports of Card" />
-                  <TextField fx:id="cardField" layoutX="172.0" layoutY="82.0" prefHeight="25.0" prefWidth="32.0" promptText="21" />
-                  <TextField fx:id="portField" layoutX="224.0" layoutY="82.0" prefHeight="25.0" prefWidth="32.0" promptText="2" />
-                  <Label layoutX="260.0" layoutY="86.0" text="eg: 21#2" />
-                  <TextField fx:id="cardAddressField" layoutX="172.0" layoutY="120.0" prefHeight="25.0" prefWidth="70.0" promptText="Card Add" />
-                  <Label layoutX="252.0" layoutY="124.0" text="eg: 21" />
-                  <Label layoutX="210.0" layoutY="85.0" text="#">
+                  <Button fx:id="sendToAllPortsOfAllCards" layoutX="14.0" layoutY="149.0" mnemonicParsing="false" onAction="#sendToAllPortsOfAllCards" prefHeight="25.0" prefWidth="116.0" text="&quot;ALL&quot; Cards/Ports" />
+                  <Button fx:id="sendToAllPortsOfCard" layoutX="14.0" layoutY="111.0" mnemonicParsing="false" onAction="#sendToAllPortsOfCard" prefHeight="25.0" prefWidth="116.0" text="All Ports of Card" />
+                  <TextField fx:id="cardField" layoutX="172.0" layoutY="74.0" prefHeight="25.0" prefWidth="32.0" promptText="21" />
+                  <TextField fx:id="portField" layoutX="224.0" layoutY="74.0" prefHeight="25.0" prefWidth="32.0" promptText="1" />
+                  <Label layoutX="260.0" layoutY="78.0" text="eg: 21#1" />
+                  <TextField fx:id="cardAddressField" layoutX="172.0" layoutY="112.0" prefHeight="25.0" prefWidth="32.0" promptText="21" />
+                  <Label layoutX="225.0" layoutY="116.0" text="Card Add eg:21" />
+                  <Label layoutX="210.0" layoutY="77.0" text="#">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
+                  <TextField fx:id="numberOfCardsField" alignment="CENTER" layoutX="171.0" layoutY="149.0" prefHeight="25.0" prefWidth="32.0" promptText="1" />
+                  <Label layoutX="225.0" layoutY="153.0" text="No of Cards 1-8" />
                </children>
             </Pane>
             <Pane layoutX="14.0" layoutY="293.0" prefHeight="158.0" prefWidth="321.0" style="-fx-border-color: Black; -fx-background-color: rgb(169,169,169);">
                <children>
                   <Button fx:id="queryMasterQueue" layoutX="14.0" layoutY="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Query Mast Q" />
-                  <Button fx:id="flushMasterQueue1" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Flush Mast Q" />
-                  <Button fx:id="queryRegQueue1" layoutX="213.0" layoutY="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Query Reg Q" />
-                  <Button fx:id="flushRegQueue11" layoutX="213.0" layoutY="65.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Flush Reg Q" />
+                  <Button fx:id="flushMasterQueue" layoutX="14.0" layoutY="65.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Flush Mast Q" />
+                  <Button fx:id="queryRegQueue" layoutX="213.0" layoutY="25.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Query Reg Q" />
+                  <Button fx:id="flushRegQueue" layoutX="213.0" layoutY="65.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Flush Reg Q" />
                   <Label layoutX="119.0" layoutY="89.0" text="Server Mode" textOverrun="CLIP">
                      <font>
                         <Font name="System Bold" size="14.0" />

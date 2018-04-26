@@ -61,7 +61,7 @@ public class GetConnection {
         int portNumber = Integer.parseInt(port);
 
         output.println("{\"number\": \"" + mobileNumber + "\",\"msg\": \"Sent from: " + cardAddress + "#" + portNumber +
-                "\",\"unicode\":\"2\",\"send_to_sim\":\"" + cardAddress + "#" + portNumber + "\",\"queue_type\":\"master\"}");
+                "\",\"unicode\":\"5\",\"send_to_sim\":\"" + cardAddress + "#" + portNumber + "\",\"queue_type\":\"master\"}");
 
         String response = input.readLine();
         //TODO Skip the above server response, it's not needed but store the next
@@ -75,7 +75,7 @@ public class GetConnection {
         for (int i = 1; i < 5; i++) {
 
             output.println("{\"number\":\"" + mobileNumber + "\",\"msg\":\"Sent from: " + card + "#" + i +
-                    "\",\"unicode\":\"2\",\"send_to_sim\":\"" + card + "#" + i + "\",\"queue_type\":\"master\"}");
+                    "\",\"unicode\":\"5\",\"send_to_sim\":\"" + card + "#" + i + "\",\"queue_type\":\"master\"}");
 
             String response = input.readLine();
             response = input.readLine();
@@ -89,4 +89,26 @@ public class GetConnection {
 
     }
 
+    public void sendToAllPortsAndCards(String mobile, TextArea textArea, int numberOfCards) throws IOException {
+
+        numberOfCards = numberOfCards + 20;
+
+        for(int card = 21; card <= numberOfCards; card++){
+            for(int port = 1; port < 5; port++){
+                output.println("{\"number\":\"" + mobile + "\",\"msg\":\"Sent from: " + card + "#" + port +
+                        "\",\"unicode\":\"5\",\"send_to_sim\":\"" + card + "#" + port + "\",\"queue_type\":\"master\"}");
+
+                String response = input.readLine();
+                response = input.readLine();
+
+                System.out.println(response);
+
+                JsonJob job = new JsonJob(response);
+                job.parseResponse();
+
+                textArea.appendText("Number: " + job.getNumber() + "Card: " + job.getCardAddress() + " Port: " +
+                        job.getPortNumber() + " Reply: " + job.getReply() + "\n");
+            }
+        }
+    }
 }//end class

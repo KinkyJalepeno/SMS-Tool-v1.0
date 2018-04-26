@@ -6,6 +6,7 @@ import SenderMain.JsonJob;
 
 import Threads.allPortsOfCard;
 
+import Threads.sendToAllPortsOfAllCards;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -47,6 +48,8 @@ public class MainWindowController implements Initializable {
     private TextField portField;
     @FXML
     private TextField cardAddressField;
+    @FXML
+    private TextField numberOfCardsField;
 
     private String site;
     private String address;
@@ -238,6 +241,18 @@ public class MainWindowController implements Initializable {
 
     }
 
+    private void displayResult(String response) {
+
+        JsonJob job = new JsonJob(response);
+        job.parseResponse();
+
+        textArea.appendText("Number: \t\t" + job.getNumber() + "\n");
+        textArea.appendText("Card Add: \t" + job.getCardAddress() + "\n");
+        textArea.appendText("Port Num: \t" + job.getPortNumber() + "\n");
+        textArea.appendText("Result: \t\t" + job.getReply() + "\n\n");
+
+    }
+
 
     // **** This section is for main UI button operations ****
     @FXML
@@ -295,7 +310,7 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    private void sendToAllPortsOfCard() throws IOException {
+    private void sendToAllPortsOfCard() {
 
         String connectionStatus = connectionStatusLabel.getText();
         if (connectionStatus.equals("Disconnected")) {
@@ -317,43 +332,37 @@ public class MainWindowController implements Initializable {
             }
         }
     }
-//
-//        String connectionStatus = connectionStatusLabel.getText();
-//        if (connectionStatus.equals("Disconnected")) {
-//            textArea.setText("Connect to a gateway first you tard !");
-//            return;
-//        }
-//
-//        boolean mobileCheck = mobileNumberCheck();
-//        if (mobileCheck == false) {
-//            return;
-//        } else {
-//            boolean cardAddressCheck = cardAddressCheck();
-//            if (cardAddressCheck == false) {
-//                return;
-//            } else {
-//                String cardAdd = cardAddressField.getText();
-//                int card = Integer.parseInt(cardAdd);
-//                (new Thread(new allPortsOfCard(socket, card, mobileNumberField.getText(), textArea))).start();
-//
-//            }
-//        }
 
+    @FXML
+    private void sendToAllPortsOfAllCards(){
 
+        textArea.setText("Sending..........................\n\n");
 
-    //Sanity checks before going to send phase
-    private void displayResult(String response) {
-
-        JsonJob job = new JsonJob(response);
-        job.parseResponse();
-
-        textArea.appendText("Number: \t\t" + job.getNumber() + "\n");
-        textArea.appendText("Card Add: \t" + job.getCardAddress() + "\n");
-        textArea.appendText("Port Num: \t" + job.getPortNumber() + "\n");
-        textArea.appendText("Result: \t\t" + job.getReply() + "\n\n");
+        String connectionStatus = connectionStatusLabel.getText();
+        if (connectionStatus.equals("Disconnected")) {
+            textArea.setText("Connect to a gateway first you tard !");
+            return;
+        }
+        String numCards = numberOfCardsField.getText();
+        if(numCards.equals("")){
+            textArea.setText("Number of cards field must be 1 - 8");
+            return;
+        }
+        int numberOfCards = Integer.parseInt(numberOfCardsField.getText());
+        if(numberOfCards < 1 || numberOfCards >8){
+            textArea.setText("Enter number of GSM cards in system 1 - 8");
+            return;
+        }
+        boolean mobileCheck = mobileNumberCheck();
+        if (mobileCheck == false) {
+            return;
+        } else {
+            (new Thread(new sendToAllPortsOfAllCards(socket, mobileNumberField.getText(), textArea,numberOfCards))).start();
+        }
 
     }
 
+    //Sanity checks before going to send phase
     private boolean mobileNumberCheck() {
 
         String number = mobileNumberField.getText();
@@ -419,5 +428,7 @@ public class MainWindowController implements Initializable {
         return true;
 
     }
+
+
 
 }//End class

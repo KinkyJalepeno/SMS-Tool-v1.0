@@ -1,9 +1,7 @@
 package Threads;
 
 import SenderMain.GetConnection;
-import SenderMain.JsonJob;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.net.Socket;
