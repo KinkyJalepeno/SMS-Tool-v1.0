@@ -14,6 +14,12 @@ public class Command {
     }
 
     public String build() {
+
         return "{\"method\":\"" + method + "\"," + data + "}";
+    }
+
+    public String shortBuild() {
+
+        return "{\"" + method + "\":" + data + "}";
     }
 }

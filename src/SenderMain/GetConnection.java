@@ -26,6 +26,48 @@ public class GetConnection {
 
     }
 
+    public String backupSMSQueue() throws IOException {
+        Command backupSMSQueue = new Command("method", "\"save_q_sms_msg\"");
+        return executeShortCommand(backupSMSQueue);
+    }
+
+    public String flushGeneralQueue() throws IOException {
+
+        Command flushGeneralQueue = new Command("method", "\"delete_queue\"");
+        return executeShortCommand(flushGeneralQueue);
+    }
+
+    public String flushMasterQueue() throws IOException {
+        Command flushMasterQueue = new Command("delete_queue", "\"queue_type\":\"master\"");
+        return executeQueueCommand(flushMasterQueue);
+    }
+
+    public String queryGeneralQueue() throws IOException {
+
+        Command queryGeneralQueue = new Command("method", "\"get_q_size\"");
+        return executeShortCommand(queryGeneralQueue);
+    }
+
+    public String queryMasterQueue() throws IOException {
+        Command queryMasterQueue = new Command("get_q_size", "\"queue_type\":\"master\"");
+        return executeQueueCommand(queryMasterQueue);
+
+    }
+
+    private String executeShortCommand(Command command) throws IOException {
+
+        output.println(command.shortBuild());
+
+        return input.readLine();
+    }
+
+    private String executeQueueCommand(Command command) throws IOException {
+
+        output.println(command.build());
+
+        return input.readLine();
+    }
+
     private String executeCommand(Command command) throws IOException {
 
         output.println(command.build());
@@ -81,7 +123,7 @@ public class GetConnection {
             response = input.readLine();
 
             JsonJob job = new JsonJob(response);
-            job.parseResponse();
+            job.parseSendResponse();
 
             textArea.appendText("Card: " + job.getCardAddress() + " Port: " + job.getPortNumber() + " Reply: " +
                     job.getReply() + "\n");
@@ -104,11 +146,12 @@ public class GetConnection {
                 System.out.println(response);
 
                 JsonJob job = new JsonJob(response);
-                job.parseResponse();
+                job.parseSendResponse();
 
                 textArea.appendText("Number: " + job.getNumber() + "Card: " + job.getCardAddress() + " Port: " +
                         job.getPortNumber() + " Reply: " + job.getReply() + "\n");
             }
         }
     }
+
 }//end class

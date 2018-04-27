@@ -14,7 +14,7 @@ public class JsonJob {
     private String number;
     private String cardAddress;
     private String portNumber;
-    //private String activeSim;
+    private long queueLength;
 
 
     private Object obj;
@@ -34,6 +34,24 @@ public class JsonJob {
         email2smsStatus = (String) jsonObject.get("email2sms_status");
         mySqlStatus = (String) jsonObject.get("my_sql_status");
 
+    }
+
+    public void parseSendResponse() {
+
+        number = (String) jsonObject.get("number");
+        cardAddress = (String) jsonObject.get("card_add");
+        portNumber = (String) jsonObject.get("port_num");
+        reply = (String) jsonObject.get("reply");
+    }
+
+    public void parseFlushResponse(){
+
+        reply = (String) jsonObject.get("reply");
+    }
+
+    public void parseQueueQuery(){
+
+        queueLength = (long) jsonObject.get("total_len");
     }
 
     public String getServerCurrentStatus(){
@@ -56,15 +74,6 @@ public class JsonJob {
         return mySqlStatus;
     }
 
-
-    public void parseResponse() {
-
-        number = (String) jsonObject.get("number");
-        cardAddress = (String) jsonObject.get("card_add");
-        portNumber = (String) jsonObject.get("port_num");
-        reply = (String) jsonObject.get("reply");
-    }
-
     public String getNumber(){
         return number;
     }
@@ -81,9 +90,9 @@ public class JsonJob {
         return portNumber;
     }
 
-//    public String getActiveSim(){
-//        return activeSim;
-//    }
+    public long getQueueLength(){
+        return queueLength;
+    }
 
 
 

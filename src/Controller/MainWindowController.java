@@ -244,7 +244,7 @@ public class MainWindowController implements Initializable {
     private void displayResult(String response) {
 
         JsonJob job = new JsonJob(response);
-        job.parseResponse();
+        job.parseSendResponse();
 
         textArea.appendText("Number: \t\t" + job.getNumber() + "\n");
         textArea.appendText("Card Add: \t" + job.getCardAddress() + "\n");
@@ -360,6 +360,80 @@ public class MainWindowController implements Initializable {
             (new Thread(new sendToAllPortsOfAllCards(socket, mobileNumberField.getText(), textArea,numberOfCards))).start();
         }
 
+    }
+
+    @FXML
+    private void queryGeneralQueue() throws IOException {
+
+        GetConnection connection = new GetConnection(socket);
+        String response = connection.queryGeneralQueue();
+
+        JsonJob parseQueueQuery = new JsonJob(response);
+        parseQueueQuery.parseQueueQuery();
+
+        textArea.appendText("Number of SMS in general queue: " + parseQueueQuery.getQueueLength() + "\n");
+
+    }
+
+    @FXML
+    private void flushGeneralQueue() throws IOException {
+
+        GetConnection connection = new GetConnection(socket);
+        String response = connection.flushGeneralQueue();
+
+        System.out.println("response = " + response);
+
+        JsonJob getFlushResponse = new JsonJob(response);
+        getFlushResponse.parseFlushResponse();
+
+        textArea.appendText("Flush queue response: " + getFlushResponse.getReply() + "\n\n");
+        queryGeneralQueue();
+
+    }
+
+    @FXML
+    private void queryMasterQueue() throws IOException {
+
+        GetConnection connection = new GetConnection(socket);
+        String response = connection.queryMasterQueue();
+
+        System.out.println("response = " + response);
+
+        JsonJob parseQueueQuery = new JsonJob(response);
+        parseQueueQuery.parseQueueQuery();
+
+        textArea.appendText("Number of SMS in Master queue: " + parseQueueQuery.getQueueLength() + "\n");
+    }
+
+    @FXML
+    private void flushMasterQueue() throws IOException {
+
+        GetConnection connection = new GetConnection(socket);
+        String response = connection.flushMasterQueue();
+
+        System.out.println("response = " + response);
+
+        JsonJob getFlushResponse = new JsonJob(response);
+        getFlushResponse.parseFlushResponse();
+
+        textArea.appendText("Flush queue response: " + getFlushResponse.getReply() + "\n\n");
+        queryMasterQueue();
+
+
+    }
+
+    @FXML
+    private void backupSMSQueue() throws IOException {
+
+        GetConnection connection = new GetConnection(socket);
+        String response = connection.backupSMSQueue();
+
+        System.out.println("response = " + response);
+
+        JsonJob parseBackupResponse = new JsonJob(response);
+        parseBackupResponse.parseFlushResponse();
+
+        textArea.appendText("Queue backup response: " + parseBackupResponse.getReply() + "\n");
     }
 
     //Sanity checks before going to send phase
