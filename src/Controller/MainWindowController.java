@@ -117,7 +117,7 @@ public class MainWindowController implements Initializable {
     private void addGateway() {
         try {
             Stage stage = new Stage();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/AddGatewayWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/AddGatewayWindow.fxml"));
             Parent root1 = loader.load();
 
             AddGatewayController controller = loader.getController();
@@ -167,7 +167,7 @@ public class MainWindowController implements Initializable {
         } else {
             try {
                 Stage stage = new Stage();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("../GUI/EditGatewayWindow.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/GUI/EditGatewayWindow.fxml"));
                 Parent root1 = loader.load();
 
                 readDatabaseRow();
