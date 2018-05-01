@@ -62,9 +62,9 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="serverPauseMode" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Pause Mode" />
-                  <Button fx:id="serverRunMode" layoutX="114.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Run Mode" />
-                  <Button fx:id="serverScheduledMode" layoutX="213.0" layoutY="119.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Sched Mode" />
+                  <Button fx:id="pauseServer" layoutX="14.0" layoutY="119.0" mnemonicParsing="false" onAction="#pauseServer" prefHeight="25.0" prefWidth="93.0" text="Pause Mode" />
+                  <Button fx:id="runServer" layoutX="114.0" layoutY="119.0" mnemonicParsing="false" onAction="#runServer" prefHeight="25.0" prefWidth="93.0" text="Run Mode" />
+                  <Button fx:id="setScheduled" layoutX="213.0" layoutY="119.0" mnemonicParsing="false" onAction="#setScheduled" prefHeight="25.0" prefWidth="93.0" text="Sched Mode" />
                   <Label layoutX="101.0" layoutY="4.0" text="Queue Operations" textOverrun="CLIP">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -87,7 +87,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="serverStatusLabel" layoutX="622.0" layoutY="48.0" text="Unkown" textFill="#c90000c7">
+            <Label fx:id="serverStatusLabel" layoutX="622.0" layoutY="48.0" text="Unknown" textFill="#c90000c7">
                <font>
                   <Font size="14.0" />
                </font>

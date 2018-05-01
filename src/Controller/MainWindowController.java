@@ -253,6 +253,24 @@ public class MainWindowController implements Initializable {
 
     }
 
+    private void getServerRunPauseStatus() throws IOException{
+
+        GetConnection conn = new GetConnection(socket);
+        String response = conn.getServerStatus();
+
+        JsonJob getStatus = new JsonJob(response);
+        getStatus.parseStatus();
+
+        String serverStatus = getStatus.getServerCurrentStatus();
+        serverStatusLabel.setText(getStatus.getServerCurrentStatus());
+
+        if (serverStatus.equals("Running")) {
+            serverStatusLabel.setTextFill(Color.GREEN);
+        } else {
+            serverStatusLabel.setTextFill(Color.RED);
+        }
+    }
+
 
     // **** This section is for main UI button operations ****
     @FXML
@@ -434,6 +452,52 @@ public class MainWindowController implements Initializable {
         parseBackupResponse.parseFlushResponse();
 
         textArea.appendText("Queue backup response: " + parseBackupResponse.getReply() + "\n");
+    }
+
+    @FXML
+    private void pauseServer() throws IOException{
+
+        GetConnection connection = new GetConnection(socket);
+        String response = connection.pauseServer();
+
+        System.out.println("response = " + response);
+
+        JsonJob parsePauseRequest = new JsonJob(response);
+        parsePauseRequest.parseFlushResponse();
+
+        textArea.setText("Server pause request: " + parsePauseRequest.getReply() +"\n\n");
+
+        getServerRunPauseStatus();
+    }
+
+    @FXML
+    private void runServer() throws IOException{
+
+        GetConnection connection = new GetConnection(socket);
+        String response = connection.runServer();
+
+        System.out.println("response = " + response);
+
+        JsonJob parseRunRequest = new JsonJob(response);
+        parseRunRequest.parseFlushResponse();
+
+        textArea.setText("Server Run request: " + parseRunRequest.getReply() +"\n\n");
+
+        getServerRunPauseStatus();
+    }
+
+    @FXML
+    private void setScheduled() throws IOException{
+
+        GetConnection connection = new GetConnection(socket);
+        String response = connection.setScheduled();
+
+        System.out.println("response = " + response);
+
+        JsonJob parseScheduledRequest = new JsonJob(response);
+        parseScheduledRequest.parseFlushResponse();
+
+        textArea.setText("Request to set Scheduled mode: " + parseScheduledRequest.getReply() +"\n\n");
     }
 
     //Sanity checks before going to send phase

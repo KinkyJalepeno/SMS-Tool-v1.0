@@ -54,6 +54,25 @@ public class GetConnection {
 
     }
 
+    public String pauseServer() throws IOException {
+
+        Command pauseServer = new Command("method", "\"pause_server\"");
+        return executeShortCommand(pauseServer);
+
+    }
+
+    public String runServer() throws IOException {
+
+        Command runServer = new Command("method", "\"run_server\"");
+        return executeShortCommand(runServer);
+    }
+
+    public String setScheduled() throws IOException {
+
+        Command setScheduled = new Command("set_config_params", "\"server_status\":\"scheduled\"");
+        return executeQueueCommand(setScheduled);
+    }
+
     private String executeShortCommand(Command command) throws IOException {
 
         output.println(command.shortBuild());
@@ -153,5 +172,7 @@ public class GetConnection {
             }
         }
     }
+
+
 
 }//end class
