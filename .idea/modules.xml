@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/SMS-Tool.iml" filepath="$PROJECT_DIR$/SMS-Tool.iml" />
+      <module fileurl="file://$PROJECT_DIR$/SMS-Toolv2.iml" filepath="$PROJECT_DIR$/SMS-Toolv2.iml" />
     </modules>
   </component>
 </project>

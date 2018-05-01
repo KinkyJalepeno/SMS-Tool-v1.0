@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SMS-Toolv2:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SMS_Toolv2_jar</output-path>
+    <root id="archive" name="SMS-Toolv2.jar">
+      <element id="module-output" name="SMS-Toolv2" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/sqlite-jdbc-3.21.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/json-simple-1.1.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
