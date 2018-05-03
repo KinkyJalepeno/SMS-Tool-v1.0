@@ -44,56 +44,59 @@ public class JsonJob {
         reply = (String) jsonObject.get("reply");
     }
 
-    public void parseFlushResponse(){
+    public void parseFlushResponse() {
 
         reply = (String) jsonObject.get("reply");
     }
 
-    public void parseQueueQuery(){
+    public void parseQueueQuery() {
 
         queueLength = (long) jsonObject.get("total_len");
     }
 
-    public String getServerCurrentStatus(){
+    public String getServerCurrentStatus() {
 
         return serverCurrentStatus;
     }
 
-    public String getEmailStatus(){
+    public String getEmailStatus() {
 
         return emailStatus;
     }
 
-    public String getEmail2smsStatus(){
+    public String getEmail2smsStatus() {
 
         return email2smsStatus;
     }
 
-    public String getMySqlStatus(){
+    public String getMySqlStatus() {
 
         return mySqlStatus;
     }
 
-    public String getNumber(){
+    public String getNumber() {
+
         return number;
     }
 
-    public String getReply(){
+    public String getReply() {
+
         return reply;
     }
 
-    public String getCardAddress(){
+    public String getCardAddress() {
+
         return cardAddress;
     }
 
-    public String getPortNumber(){
+    public String getPortNumber() {
+
         return portNumber;
     }
 
-    public long getQueueLength(){
+    public long getQueueLength() {
+
         return queueLength;
     }
-
-
 
 }

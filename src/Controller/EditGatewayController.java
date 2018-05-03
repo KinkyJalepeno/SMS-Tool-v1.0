@@ -10,11 +10,15 @@ import java.sql.SQLException;
 
 public class EditGatewayController {
 
-    @FXML private Label siteNameLabel;
+    @FXML
+    private Label siteNameLabel;
     //@FXML private TextField siteNameField;
-    @FXML private TextField ipAddressField;
-    @FXML private TextField smsPasswordField;
-    @FXML private Label errorLabel;
+    @FXML
+    private TextField ipAddressField;
+    @FXML
+    private TextField smsPasswordField;
+    @FXML
+    private Label errorLabel;
 
     @FXML
     private void submitGatewayDetails() throws SQLException {
@@ -27,9 +31,9 @@ public class EditGatewayController {
 
         System.out.println(sqlCommand);
 
-        if(site.equals("") || address.equals("") || pass.equals("")){
+        if (site.equals("") || address.equals("") || pass.equals("")) {
             errorLabel.setText("Error: Fill in all fields");
-        }else {
+        } else {
 
             DatabaseCommand executeCommand = new DatabaseCommand(sqlCommand);
             executeCommand.command();
@@ -40,7 +44,7 @@ public class EditGatewayController {
 
     }//end submitGatewayDetails method
 
-    public void setInitialValues(String site, String address, String password){
+    public void setInitialValues(String site, String address, String password) {
 
         siteNameLabel.setText(site);
         ipAddressField.setText(address);

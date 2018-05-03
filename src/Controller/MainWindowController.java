@@ -23,7 +23,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.URL;
 import java.sql.*;
 import java.text.Collator;
@@ -58,7 +60,7 @@ public class MainWindowController implements Initializable {
 
     private int port = 63333;
 
-    // **** This inits the site list in the drop-down box ****
+    // **** This loads the site list into the drop-down box ****
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -175,7 +177,7 @@ public class MainWindowController implements Initializable {
                 EditGatewayController controller = loader.getController();
                 controller.setInitialValues(site, address, pass);
 
-                stage.setTitle("Add a Gateway");
+                stage.setTitle("View/Edit a Gateway");
                 stage.setScene(new Scene(root1));
                 stage.show();
 
@@ -190,6 +192,12 @@ public class MainWindowController implements Initializable {
     @FXML
     private void connectToSite() {
 
+        connectionStatusLabel.setTextFill(Color.RED);
+        connectionStatusLabel.setText("Not Connected");
+
+        serverStatusLabel.setTextFill(Color.RED);
+        serverStatusLabel.setText("Unknown");
+
         String choice = choiceBox.getValue();
         if (choice == null) {
             textArea.appendText("You must select a site from the drop-down first !\n");
@@ -200,7 +208,8 @@ public class MainWindowController implements Initializable {
             System.out.println(site + " " + address + " " + pass);
         }
         try {
-            socket = new Socket(address, port);
+            socket = new Socket();
+            socket.connect(new InetSocketAddress(address, port), 8000);
 
             GetConnection conn = new GetConnection(socket);
             String authenticationResult = conn.authenticate(pass);
@@ -253,7 +262,7 @@ public class MainWindowController implements Initializable {
 
     }
 
-    private void getServerRunPauseStatus() throws IOException{
+    private void getServerRunPauseStatus() throws IOException {
 
         GetConnection conn = new GetConnection(socket);
         String response = conn.getServerStatus();
@@ -352,7 +361,7 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    private void sendToAllPortsOfAllCards(){
+    private void sendToAllPortsOfAllCards() {
 
         textArea.setText("Sending..........................\n\n");
 
@@ -362,12 +371,12 @@ public class MainWindowController implements Initializable {
             return;
         }
         String numCards = numberOfCardsField.getText();
-        if(numCards.equals("")){
+        if (numCards.equals("")) {
             textArea.setText("Number of cards field must be 1 - 8");
             return;
         }
         int numberOfCards = Integer.parseInt(numberOfCardsField.getText());
-        if(numberOfCards < 1 || numberOfCards >8){
+        if (numberOfCards < 1 || numberOfCards > 8) {
             textArea.setText("Enter number of GSM cards in system 1 - 8");
             return;
         }
@@ -375,7 +384,7 @@ public class MainWindowController implements Initializable {
         if (mobileCheck == false) {
             return;
         } else {
-            (new Thread(new sendToAllPortsOfAllCards(socket, mobileNumberField.getText(), textArea,numberOfCards))).start();
+            (new Thread(new sendToAllPortsOfAllCards(socket, mobileNumberField.getText(), textArea, numberOfCards))).start();
         }
 
     }
@@ -389,7 +398,7 @@ public class MainWindowController implements Initializable {
         JsonJob parseQueueQuery = new JsonJob(response);
         parseQueueQuery.parseQueueQuery();
 
-        textArea.appendText("Number of SMS in general queue: " + parseQueueQuery.getQueueLength() + "\n");
+        textArea.appendText("Number of SMS in General queue: " + parseQueueQuery.getQueueLength() + "\n");
 
     }
 
@@ -455,7 +464,7 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    private void pauseServer() throws IOException{
+    private void pauseServer() throws IOException {
 
         GetConnection connection = new GetConnection(socket);
         String response = connection.pauseServer();
@@ -465,13 +474,13 @@ public class MainWindowController implements Initializable {
         JsonJob parsePauseRequest = new JsonJob(response);
         parsePauseRequest.parseFlushResponse();
 
-        textArea.setText("Server pause request: " + parsePauseRequest.getReply() +"\n\n");
+        textArea.setText("Server pause request: " + parsePauseRequest.getReply() + "\n\n");
 
         getServerRunPauseStatus();
     }
 
     @FXML
-    private void runServer() throws IOException{
+    private void runServer() throws IOException {
 
         GetConnection connection = new GetConnection(socket);
         String response = connection.runServer();
@@ -481,13 +490,13 @@ public class MainWindowController implements Initializable {
         JsonJob parseRunRequest = new JsonJob(response);
         parseRunRequest.parseFlushResponse();
 
-        textArea.setText("Server Run request: " + parseRunRequest.getReply() +"\n\n");
+        textArea.setText("Server Run request: " + parseRunRequest.getReply() + "\n\n");
 
         getServerRunPauseStatus();
     }
 
     @FXML
-    private void setScheduled() throws IOException{
+    private void setScheduled() throws IOException {
 
         GetConnection connection = new GetConnection(socket);
         String response = connection.setScheduled();
@@ -497,7 +506,7 @@ public class MainWindowController implements Initializable {
         JsonJob parseScheduledRequest = new JsonJob(response);
         parseScheduledRequest.parseFlushResponse();
 
-        textArea.setText("Request to set Scheduled mode: " + parseScheduledRequest.getReply() +"\n\n");
+        textArea.setText("Request to set Scheduled mode: " + parseScheduledRequest.getReply() + "\n\n");
     }
 
     //Sanity checks before going to send phase
@@ -529,7 +538,7 @@ public class MainWindowController implements Initializable {
         return true;
     }
 
-    private boolean cardAddressCheckTwo(){
+    private boolean cardAddressCheckTwo() {
 
 
         String card = cardAddressField.getText();
@@ -566,7 +575,6 @@ public class MainWindowController implements Initializable {
         return true;
 
     }
-
 
 
 }//End class

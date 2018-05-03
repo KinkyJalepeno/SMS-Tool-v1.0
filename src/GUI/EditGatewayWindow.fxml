@@ -11,8 +11,8 @@
    <children>
       <Pane prefHeight="100.0" prefWidth="460.0" style="-fx-background-color: grey;">
          <children>
-            <TextField fx:id="ipAddressField" layoutX="164.0" layoutY="26.0" prefHeight="25.0" prefWidth="130.0" />
-            <TextField fx:id="smsPasswordField" layoutX="322.0" layoutY="26.0" prefHeight="25.0" prefWidth="130.0" />
+            <TextField fx:id="ipAddressField" alignment="CENTER" layoutX="164.0" layoutY="26.0" prefHeight="25.0" prefWidth="130.0" />
+            <TextField fx:id="smsPasswordField" alignment="CENTER" layoutX="322.0" layoutY="26.0" prefHeight="25.0" prefWidth="130.0" />
             <Button fx:id="" layoutX="191.0" layoutY="62.0" mnemonicParsing="false" onAction="#submitGatewayDetails" prefHeight="25.0" prefWidth="76.0" text="Submit" />
             <Label layoutX="203.0" layoutY="6.0" text="IP Address" />
             <Label layoutX="359.0" layoutY="6.0" text="Password" />
@@ -21,14 +21,14 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="siteNameLabel" layoutX="17.0" layoutY="26.0" prefHeight="25.0" prefWidth="115.0" textAlignment="RIGHT">
+            <Label fx:id="siteNameLabel" alignment="CENTER_RIGHT" layoutX="17.0" layoutY="26.0" prefHeight="25.0" prefWidth="104.0">
                <font>
                   <Font name="System Bold Italic" size="16.0" />
                </font>
             </Label>
-            <Label layoutX="137.0" layoutY="26.0" text=":">
+            <Label layoutX="141.0" layoutY="24.0" text=":">
                <font>
-                  <Font size="17.0" />
+                  <Font name="System Bold" size="18.0" />
                </font>
             </Label>
          </children>

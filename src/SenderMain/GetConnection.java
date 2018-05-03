@@ -154,8 +154,8 @@ public class GetConnection {
 
         numberOfCards = numberOfCards + 20;
 
-        for(int card = 21; card <= numberOfCards; card++){
-            for(int port = 1; port < 5; port++){
+        for (int card = 21; card <= numberOfCards; card++) {
+            for (int port = 1; port < 5; port++) {
                 output.println("{\"number\":\"" + mobile + "\",\"msg\":\"Sent from: " + card + "#" + port +
                         "\",\"unicode\":\"5\",\"send_to_sim\":\"" + card + "#" + port + "\",\"queue_type\":\"master\"}");
 
@@ -172,7 +172,5 @@ public class GetConnection {
             }
         }
     }
-
-
 
 }//end class

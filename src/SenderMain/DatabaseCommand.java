@@ -34,17 +34,17 @@ public class DatabaseCommand {
     }//end command execution
 
 
-    public String getSite(){
+    public String getSite() {
 
         return site;
     }
 
-    public String getAddress(){
+    public String getAddress() {
 
         return address;
     }
 
-    public String getPassword(){
+    public String getPassword() {
 
         return pass;
     }

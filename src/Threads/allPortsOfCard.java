@@ -22,7 +22,7 @@ public class allPortsOfCard implements Runnable {
 
     }
 
-    public void run(){
+    public void run() {
         try {
             GetConnection connection = new GetConnection(socket);
             connection.sendToAllCardsPorts(mobile, card, textArea);

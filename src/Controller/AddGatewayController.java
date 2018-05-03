@@ -5,14 +5,19 @@ import SenderMain.GetSiteList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+
 import java.sql.SQLException;
 
 public class AddGatewayController {
 
-    @FXML private TextField siteNameField;
-    @FXML private TextField ipAddressField;
-    @FXML private TextField smsPasswordField;
-    @FXML private Label errorLabel;
+    @FXML
+    private TextField siteNameField;
+    @FXML
+    private TextField ipAddressField;
+    @FXML
+    private TextField smsPasswordField;
+    @FXML
+    private Label errorLabel;
     private GetSiteList siteList;
 
     @FXML
@@ -23,9 +28,9 @@ public class AddGatewayController {
         String pass = smsPasswordField.getText();
         String sqlCommand = ("INSERT INTO gateways VALUES ('" + site + "','" + address + "','" + pass + "')");
 
-        if(site.equals("") || address.equals("") || pass.equals("")){
+        if (site.equals("") || address.equals("") || pass.equals("")) {
             errorLabel.setText("Error: Fill in all fields");
-        }else {
+        } else {
 
             DatabaseCommand executeCommand = new DatabaseCommand(sqlCommand);
             executeCommand.command();
@@ -37,7 +42,7 @@ public class AddGatewayController {
 
     }//end submitGatewayDetails method
 
-    public void sendGetSiteList(GetSiteList siteList){
+    public void sendGetSiteList(GetSiteList siteList) {
 
         this.siteList = siteList;
     }
