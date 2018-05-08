@@ -222,7 +222,9 @@ public class MainWindowController implements Initializable {
 
         } catch (Exception e) {
             e.printStackTrace();
-            textArea.setText("Check server details, connection timed out...");
+            connectionStatusLabel.setText("Failed");
+            connectionStatusLabel.setTextFill(Color.RED);
+            textArea.appendText("Check server details, connection timed out...\n\n");
         }
 
     }//end connect to site method
