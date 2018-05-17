@@ -104,7 +104,7 @@ public class GetConnection {
         return response;
     }
 
-    public String sendRandomText(String mobileNumber) throws IOException {
+    public void sendRandomText(String mobileNumber, TextArea textArea) throws IOException {
 
         output.println("{\"number\":\"" + mobileNumber + "\", \"msg\":\"Random port test\"," +
                 "\"queue_type\":\"master\",\"unicode\":\"5\"}");
@@ -113,10 +113,14 @@ public class GetConnection {
         //TODO Skip the above server response, it's not needed but store the next
         response = input.readLine();
 
-        return response;
+        JsonJob job = new JsonJob(response);
+        job.parseSendResponse();
+
+        textArea.appendText("Card:\t\t" + job.getCardAddress() + "\nPort:\t\t\t" + job.getPortNumber() + "\nReply:\t\t" +
+                job.getReply() + "\nError Code:\t" + job.getErrorCode() +"\n");
     }
 
-    public String sendToCardPort(String mobileNumber, String card, String port) throws IOException {
+    public void sendToCardPort(String mobileNumber, String card, String port, TextArea textArea) throws IOException {
 
         int cardAddress = Integer.parseInt(card);
         int portNumber = Integer.parseInt(port);
@@ -128,7 +132,11 @@ public class GetConnection {
         //TODO Skip the above server response, it's not needed but store the next
         response = input.readLine();
 
-        return response;
+        JsonJob job = new JsonJob(response);
+        job.parseSendResponse();
+
+        textArea.appendText("Card:\t\t" + job.getCardAddress() + "\nPort:\t\t\t" + job.getPortNumber() + "\nReply:\t\t" +
+                job.getReply() + "\nError Code:\t" + job.getErrorCode() +"\n");
     }
 
     public void sendToAllCardsPorts(String mobileNumber, int card, TextArea textArea) throws IOException {
@@ -138,14 +146,16 @@ public class GetConnection {
             output.println("{\"number\":\"" + mobileNumber + "\",\"msg\":\"Sent from: " + card + "#" + i +
                     "\",\"unicode\":\"5\",\"send_to_sim\":\"" + card + "#" + i + "\",\"queue_type\":\"master\"}");
 
+
             String response = input.readLine();
+            //TODO ignore first response and move on.
             response = input.readLine();
 
             JsonJob job = new JsonJob(response);
             job.parseSendResponse();
 
             textArea.appendText("Card: " + job.getCardAddress() + " Port: " + job.getPortNumber() + " Reply: " +
-                    job.getReply() + "\n");
+                    job.getReply() + " Error Code: " + job.getErrorCode() +"\n");
         }
 
     }
@@ -167,8 +177,8 @@ public class GetConnection {
                 JsonJob job = new JsonJob(response);
                 job.parseSendResponse();
 
-                textArea.appendText("Number: " + job.getNumber() + "Card: " + job.getCardAddress() + " Port: " +
-                        job.getPortNumber() + " Reply: " + job.getReply() + "\n");
+                textArea.appendText("Card: " + job.getCardAddress() + " Port: " +
+                        job.getPortNumber() + " Reply: " + job.getReply() + " Code: " + job.getErrorCode() +"\n");
             }
         }
     }

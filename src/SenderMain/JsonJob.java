@@ -14,6 +14,7 @@ public class JsonJob {
     private String number;
     private String cardAddress;
     private String portNumber;
+    private String errorCode;
     private long queueLength;
 
 
@@ -42,6 +43,7 @@ public class JsonJob {
         cardAddress = (String) jsonObject.get("card_add");
         portNumber = (String) jsonObject.get("port_num");
         reply = (String) jsonObject.get("reply");
+        errorCode = (String) jsonObject.get("error_no");
     }
 
     public void parseFlushResponse() {
@@ -82,6 +84,11 @@ public class JsonJob {
     public String getReply() {
 
         return reply;
+    }
+
+    public String getErrorCode(){
+
+        return errorCode;
     }
 
     public String getCardAddress() {

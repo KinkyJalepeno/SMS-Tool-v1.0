@@ -7,6 +7,8 @@ import SenderMain.JsonJob;
 import Threads.allPortsOfCard;
 
 import Threads.sendToAllPortsOfAllCards;
+import Threads.sendToRandomPort;
+import Threads.sendToSpecificCardPort;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -260,7 +262,8 @@ public class MainWindowController implements Initializable {
         textArea.appendText("Number: \t\t" + job.getNumber() + "\n");
         textArea.appendText("Card Add: \t" + job.getCardAddress() + "\n");
         textArea.appendText("Port Num: \t" + job.getPortNumber() + "\n");
-        textArea.appendText("Result: \t\t" + job.getReply() + "\n\n");
+        textArea.appendText("Result: \t\t" + job.getReply() + "\n");
+        textArea.appendText("Error Code: \t" + job.getErrorCode() + "\n\n");
 
     }
 
@@ -291,19 +294,16 @@ public class MainWindowController implements Initializable {
     }
 
     @FXML
-    private void sendToRandomPort() throws IOException {
+    private void sendToRandomPort() {
 
         textArea.setText("Sending..................\n\n");
         String mobileNumber = mobileNumberField.getText();
         if (mobileNumber.equals("")) {
             textArea.setText("You must enter a mobile number first !");
         } else {
+            textArea.setText("Sending......... \n\n");
 
-            GetConnection connection = new GetConnection(socket);
-            String response = connection.sendRandomText(mobileNumber);
-
-            displayResult(response);
-
+            (new Thread(new sendToRandomPort(socket, mobileNumberField.getText(), textArea))).start();
         }
 
     }
@@ -329,10 +329,9 @@ public class MainWindowController implements Initializable {
                 if (portCheck == false) {
                     return;
                 } else {
-                    GetConnection connection = new GetConnection(socket);
-                    String response = connection.sendToCardPort(mobileNumberField.getText(), cardField.getText(), portField.getText());
+                    textArea.setText("Sending............. \n\n");
 
-                    displayResult(response);
+                    (new Thread(new sendToSpecificCardPort(socket, cardField.getText(), portField.getText(), mobileNumberField.getText(), textArea))).start();
                 }
             }
         }
