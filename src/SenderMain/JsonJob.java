@@ -37,6 +37,13 @@ public class JsonJob {
 
     }
 
+    public void parseSendStatus(){
+
+        cardAddress = (String) jsonObject.get("send_to_sim");
+        number = (String) jsonObject.get("number");
+        reply = (String) jsonObject.get("reply");
+    }
+
     public void parseSendResponse() {
 
         number = (String) jsonObject.get("number");
